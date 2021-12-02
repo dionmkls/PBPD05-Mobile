@@ -1,16 +1,29 @@
-# proyek_akhir
+# Proyek Akhir Semester PBP
 
-A new Flutter project.
+Aplikasi Terkait Pandemi Covid-19
 
-## Getting Started
+## Nama-nama anggota kelompok
 
-This project is a starting point for a Flutter application.
+- Dionisius Mikael Sutanto
+- Dimas Tri Kurniawan
+- Prinata Rakha Santoso
+- Qosim Ariqoh Daffa
+- Muhammad Rafif Priyo Waskito
+- Rheina Elvaretta
+- Amelia Putri Fadillah
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Link APK
+
+## Modul dan Web Service
+
+- lokasi ruang ICU/kamar yg available di RS, setidaknya jabodetabek (Qosim)
+- lokasi tempat vaksin, setidaknya jabodetabek (Rakha)
+    - tempat vaksin ditampilkan dalam bentuk card, datanya diambil menggunakan web service dari Django
+    - penambahan data menggunakan web service dengan mengirimkan data input user ke Django.
+- lokasi tempat oksigen, setidaknya jabodetabek (Dimas)
+- beranda (Amelia)
+- pengalaman pasien (Rheina)
+- lokasi tempat jual APD (Rafif)
+- FAQ/tanya jawab (Dion)
