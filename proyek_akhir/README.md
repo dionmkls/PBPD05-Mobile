@@ -16,6 +16,8 @@ Aplikasi Terkait Pandemi Covid-19
 
 ## Link APK
 
+https://drive.google.com/drive/folders/1bJe39DFnY7xZdq4JjjIVByT53N1Q3UT2?usp=sharing
+
 ## Modul dan Web Service
 
 - lokasi ruang ICU/kamar yg available di RS, setidaknya jabodetabek (Qosim)
