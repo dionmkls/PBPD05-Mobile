@@ -26,4 +26,6 @@ https://drive.google.com/drive/folders/1bJe39DFnY7xZdq4JjjIVByT53N1Q3UT2?usp=sha
 - beranda (Amelia)
 - pengalaman pasien (Rheina)
 - lokasi tempat jual APD (Rafif)
+    - terdapat card yang berisi penyedia apd, datanya berasal dari Django
+    - bisa mengisi penyedia apd lewat form di flutter yang akan dikirimkan ke Django
 - FAQ/tanya jawab (Dion)
