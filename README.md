@@ -19,7 +19,7 @@ https://drive.google.com/drive/folders/1bJe39DFnY7xZdq4JjjIVByT53N1Q3UT2?usp=sha
 ## Modul dan Web Service
 
 - lokasi ruang ICU/kamar yg available di RS, setidaknya jabodetabek (Qosim)
-    - halaman awal menampilkan pilihan daerah lokasi rumah sakit yang kemudian menampilkan daftar rumah sakit berupa card, datanya diambil menggunakan web service Django
+    - halaman awal menampilkan pilihan daerah lokasi rumah sakit yang kemudian menampilkan daftar rumah sakit dalam lokasi tersebut berupa card, datanya diambil menggunakan web service Django
     - menambahkan data menggunakan web service
 - lokasi tempat vaksin, setidaknya jabodetabek (Rakha)
     - tempat vaksin ditampilkan dalam bentuk card, datanya diambil menggunakan web service dari Django
