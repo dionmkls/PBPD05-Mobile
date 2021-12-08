@@ -22,7 +22,7 @@ https://drive.google.com/drive/folders/1bJe39DFnY7xZdq4JjjIVByT53N1Q3UT2?usp=sha
 - lokasi tempat vaksin, setidaknya jabodetabek (Rakha)
     - tempat vaksin ditampilkan dalam bentuk card, datanya diambil menggunakan web service dari Django
     - penambahan data menggunakan web service dengan mengirimkan data input user ke Django.
-- lokasi tempat oksigen, setidaknya jabodetabek (Dimas)
+- lokasi tempat oksigen, setidaknya di jabodetabek (Dimas)
 - beranda (Amelia)
 - pengalaman pasien (Rheina)
 - lokasi tempat jual APD (Rafif)
