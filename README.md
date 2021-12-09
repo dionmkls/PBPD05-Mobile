@@ -25,5 +25,7 @@ https://drive.google.com/drive/folders/1bJe39DFnY7xZdq4JjjIVByT53N1Q3UT2?usp=sha
 - lokasi tempat oksigen, setidaknya jabodetabek (Dimas)
 - beranda (Amelia)
 - pengalaman pasien (Rheina)
+    - Menampilkan pesan-pesan (cerita, pengalaman, atau kalimat penyemangat) yang disubmit dalam bentuk card
+    - Data akan diambil dan ditambahkan menggunakan webservice dari Django 
 - lokasi tempat jual APD (Rafif)
 - FAQ/tanya jawab (Dion)
