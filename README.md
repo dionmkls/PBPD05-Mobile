@@ -42,3 +42,5 @@ https://drive.google.com/drive/folders/1bJe39DFnY7xZdq4JjjIVByT53N1Q3UT2?usp=sha
     - terdapat card yang berisi penyedia apd beserta apdnya, datanya berasal dari Django
     - bisa mengisi penyedia apd lewat form dan datanya akan dikirimkan ke Django
 - FAQ/tanya jawab (Dion)
+    - menampilkan kolom faq (pertanyaan dan jawaban) dalam bentuk accordion
+    - pertanyaan dan jawaban dapat diinput melalui form dari Django
