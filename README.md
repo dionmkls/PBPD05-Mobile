@@ -24,6 +24,13 @@ https://drive.google.com/drive/folders/1bJe39DFnY7xZdq4JjjIVByT53N1Q3UT2?usp=sha
     - penambahan data menggunakan web service dengan mengirimkan data input user ke Django.
 - lokasi tempat oksigen, setidaknya jabodetabek (Dimas)
 - beranda (Amelia)
+	- beranda menampilkan akan menampilkan:
+		- teks paragraf informasi covid dan vaksinasi covid
+		- gambar ajakan vaksinasi
+		- tabel penambahan kasus covid bulanan datanya diambil menggunakan web service dari Django
+		- chart statistik vaksinasi
+		- ditampilkan dalam bentuk card, 
+    - penambahan data kasus covid bulanan menggunakan web service dengan mengirimkan data input user ke Django.
 - pengalaman pasien (Rheina)
     - Menampilkan pesan-pesan (cerita, pengalaman, atau kalimat penyemangat) yang disubmit dalam bentuk card
     - Data akan diambil dan ditambahkan menggunakan webservice dari Django 
