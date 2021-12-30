@@ -2,8 +2,8 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'vaksin.dart';
-import 'vaksin_card.dart';
+import '../model/vaksin.dart';
+import '../model/vaksin_card.dart';
 import 'vaksin_form.dart';
 import 'package:http/http.dart' as http;
 

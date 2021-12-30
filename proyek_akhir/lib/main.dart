@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'vaksin/vaksin_index.dart';
+import 'page/vaksin_index.dart';
 
 void main() => runApp(MaterialApp(
       home: Vaksin(),
