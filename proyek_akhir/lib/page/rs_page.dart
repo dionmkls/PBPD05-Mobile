@@ -2,8 +2,20 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import './rs_form.dart';
+// import './rs_form.dart';
 import '../model/rumah_sakit.dart';
+
+import 'package:flutter/cupertino.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'form_oksigen.dart';
+import 'oksigen.dart';
+import 'apd_form.dart';
+import 'apd_page.dart';
+import 'vaksin_form.dart';
+import 'vaksin_index.dart';
+import 'rs_form.dart';
+import 'rs_page.dart';
 
 Future<RumahSakit> fetchRS() async {
   final response = await http.get(
@@ -55,9 +67,7 @@ class _DaftarRSState extends State<DaftarRS> {
       body: Container(
         padding: const EdgeInsets.all(15),
         child: Column(
-          children: [
-
-          ],
+          children: [],
         ),
       ),
       floatingActionButton: FloatingActionButton(

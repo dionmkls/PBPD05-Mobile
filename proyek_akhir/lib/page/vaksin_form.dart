@@ -4,6 +4,19 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:flutter/cupertino.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'form_oksigen.dart';
+import 'oksigen.dart';
+import 'apd_form.dart';
+import 'apd_page.dart';
+import 'vaksin_form.dart';
+import 'vaksin_index.dart';
+import 'rs_form.dart';
+import 'rs_page.dart';
+import 'faq.dart';
+
 class LokasiForm extends StatefulWidget {
   @override
   _LokasiFormState createState() => _LokasiFormState();
@@ -55,6 +68,154 @@ class _LokasiFormState extends State<LokasiForm> {
       appBar: AppBar(
         title: const Text("Form Penambahan Lokasi Vaksin"),
         backgroundColor: Colors.blue[200],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text(
+                'Navigation Menu',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text('Beranda'),
+              onTap: () {
+                // TODO
+              },
+            ),
+            ExpansionTile(
+              title: Text("Vaksin"),
+              leading: FaIcon(FontAwesomeIcons.syringe),
+              children: <Widget>[
+                ListTile(
+                  leading: FaIcon(FontAwesomeIcons.syringe),
+                  title: Text('Lokasi'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Vaksin()),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: FaIcon(FontAwesomeIcons.syringe),
+                  title: Text('Form'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LokasiForm()),
+                    );
+                  },
+                ),
+              ],
+            ),
+            ExpansionTile(
+              title: Text("Oksigen"),
+              leading: FaIcon(FontAwesomeIcons.medkit),
+              children: <Widget>[
+                ListTile(
+                  leading: FaIcon(FontAwesomeIcons.medkit),
+                  title: Text('Lokasi'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Oksigen()),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: FaIcon(FontAwesomeIcons.medkit),
+                  title: Text('Form'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => FormOksigen()),
+                    );
+                  },
+                ),
+              ],
+            ),
+            ExpansionTile(
+              title: Text("APD"),
+              leading: FaIcon(FontAwesomeIcons.tshirt),
+              children: <Widget>[
+                ListTile(
+                  leading: FaIcon(FontAwesomeIcons.tshirt),
+                  title: Text('Lokasi'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MyApdPageWidget()),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: FaIcon(FontAwesomeIcons.tshirt),
+                  title: Text('Form'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ApdFormRoute()),
+                    );
+                  },
+                ),
+              ],
+            ),
+            ExpansionTile(
+              title: Text("Rumah Sakit"),
+              leading: FaIcon(FontAwesomeIcons.hospital),
+              children: <Widget>[
+                ListTile(
+                  leading: FaIcon(FontAwesomeIcons.hospital),
+                  title: Text('Lokasi'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => DaftarRS()),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: FaIcon(FontAwesomeIcons.hospital),
+                  title: Text('Form'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => FormRS()),
+                    );
+                  },
+                ),
+              ],
+            ),
+            ListTile(
+              leading: Icon(Icons.forum),
+              title: Text('Forum'),
+              onTap: () {
+                // TODO
+              },
+            ),
+            ListTile(
+              leading: FaIcon(FontAwesomeIcons.questionCircle),
+              title: Text('FAQ'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => FormRS()),
+                );
+              },
+            ),
+          ],
+        ),
       ),
       body: Form(
         key: _formKey,
