@@ -16,4 +16,16 @@ class RumahSakit {
     required this.noTelp,
     required this.tersedia,
   });
+
+  factory RumahSakit.fromJson(Map<String, dynamic> json) {
+    return RumahSakit(
+      id: json['id'],
+      nama: json['nama'],
+      lokasi: json['lokasi'],
+      alamat: json['alamat'],
+      urlGmaps: json['urlGmaps'],
+      noTelp: json['noTelp'],
+      tersedia: json['tersedia'],
+    );
+  }
 }
