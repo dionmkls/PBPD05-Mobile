@@ -5,6 +5,8 @@ import 'page/vaksin_form.dart';
 import 'page/vaksin_index.dart';
 import 'page/oksigen.dart';
 
+import 'package:flutter/material.dart';
+
 void main() {
   runApp(Oksigen());
 }
