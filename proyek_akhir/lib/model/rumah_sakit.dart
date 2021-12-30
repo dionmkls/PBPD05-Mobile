@@ -7,7 +7,7 @@ class RumahSakit {
   final String noTelp;
   final String tersedia;
 
-  RumahSakit({
+  const RumahSakit({
     required this.id,
     required this.nama,
     required this.lokasi,
