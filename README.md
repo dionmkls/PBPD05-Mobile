@@ -39,8 +39,8 @@ https://drive.google.com/drive/folders/1bJe39DFnY7xZdq4JjjIVByT53N1Q3UT2?usp=sha
     - Menampilkan pesan-pesan (cerita, pengalaman, atau kalimat penyemangat) yang disubmit dalam bentuk card
     - Data akan diambil dan ditambahkan menggunakan webservice dari Django 
 - lokasi tempat jual APD (Rafif)
-    - terdapat card yang berisi penyedia apd beserta apdnya, datanya berasal dari Django
-    - bisa mengisi penyedia apd lewat form dan datanya akan dikirimkan ke Django
+    - terdapat card yang berisi penyedia apd, datanya berasal dari Django
+    - bisa mengisi penyedia apd lewat form di flutter yang akan dikirimkan ke Django
 - FAQ/tanya jawab (Dion)
     - menampilkan kolom faq (pertanyaan dan jawaban) dalam bentuk accordion
     - pertanyaan dan jawaban dapat diinput melalui form dari Django
