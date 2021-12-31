@@ -40,10 +40,18 @@ class _LokasiFormState extends State<LokasiForm> {
   String jenis = "";
   String syarat = "";
 
+  void refresh() {
+    Navigator.pop(context);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => LokasiForm()),
+    );
+  }
+
   Future<void> berhasil() async {
-    const url = 'https://tk-pbp-d05.herokuapp.com/lokasi-vaksin/add';
+    const urlDjango = 'https://tk-pbp-d05.herokuapp.com/lokasi-vaksin/add';
     try {
-      final response = await http.post(Uri.parse(url),
+      final response = await http.post(Uri.parse(urlDjango),
           body: jsonEncode({
             'kota': kota,
             'nama': nama,
@@ -57,6 +65,10 @@ class _LokasiFormState extends State<LokasiForm> {
       extractedData.forEach((key, value) {
         print(value); // "data berhasil ditambahkan"
       });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Lokasi vaksin telah ditambahkan')),
+      );
+      refresh();
     } catch (p) {
       print(p);
     }
@@ -91,9 +103,10 @@ class _LokasiFormState extends State<LokasiForm> {
               title: Text('Beranda'),
               onTap: () {
                 Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Beranda()),
-                    );              },
+                  context,
+                  MaterialPageRoute(builder: (context) => Beranda()),
+                );
+              },
             ),
             ExpansionTile(
               title: Text("Vaksin"),
@@ -479,10 +492,6 @@ class _LokasiFormState extends State<LokasiForm> {
                     if (_formKey.currentState!.validate()) {
                       // Jika form valid, tampilkan sebuah snackbar
                       // dan simpan data dalam database/server
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                            content: Text('Lokasi vaksin telah ditambahkan')),
-                      );
                       berhasil();
                     }
                   },

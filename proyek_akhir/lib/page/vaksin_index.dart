@@ -1,11 +1,9 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
-import 'package:proyek_akhir/page/home_page.dart';
 import 'dart:convert';
 import '../model/vaksin.dart';
 import '../model/vaksin_card.dart';
-import 'vaksin_form.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/cupertino.dart';
@@ -20,6 +18,7 @@ import 'vaksin_index.dart';
 import 'rs_form.dart';
 import 'rs_page.dart';
 import 'faq.dart';
+import 'home_page.dart';
 
 class Vaksin extends StatefulWidget {
   Vaksin({Key? key}) : super(key: key);
@@ -127,22 +126,6 @@ class _VaksinState extends State<Vaksin> {
       appBar: AppBar(
         title: const Text('PBP D-05'),
         backgroundColor: Colors.blue[200],
-        // actions: <Widget>[
-        //   IconButton(
-        //     // buat masuk ke halaman form
-        //     icon: const Icon(Icons.navigate_next),
-        //     tooltip: 'Go to the next page',
-        //     onPressed: () {
-        //       Navigator.push(context, MaterialPageRoute<void>(
-        //         builder: (BuildContext context) {
-        //           return Scaffold(
-        //             body: LokasiForm(),
-        //           );
-        //         },
-        //       ));
-        //     },
-        //   ),
-        // ],
       ),
       drawer: Drawer(
         child: ListView(
@@ -165,9 +148,9 @@ class _VaksinState extends State<Vaksin> {
               title: Text('Beranda'),
               onTap: () {
                 Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Beranda()),
-                    );
+                  context,
+                  MaterialPageRoute(builder: (context) => Beranda()),
+                );
               },
             ),
             ExpansionTile(
@@ -319,6 +302,25 @@ class _VaksinState extends State<Vaksin> {
                     letterSpacing: 1,
                     fontSize: 12,
                   ),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Vaksin()),
+                    );
+                  },
+                  child: const Text('Refresh'),
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.blue,
+                      onPrimary: Colors.white,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                      )),
                 ),
               ),
               Container(
