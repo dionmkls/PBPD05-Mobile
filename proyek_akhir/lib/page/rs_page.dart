@@ -17,42 +17,6 @@ import 'vaksin_index.dart';
 import 'rs_form.dart';
 import 'rs_page.dart';
 
-Future<RumahSakit> fetchRS() async {
-  final response = await http.get(
-    Uri.parse('/'),
-  );
-
-  if (response.statusCode == 200) {
-    // If the server did return a 200 OK response, then parse the JSON.
-    return RumahSakit.fromJson(jsonDecode(response.body));
-  } else {
-    // If the server did not return a 200 OK response, then throw an exception.
-    throw Exception('Failed to load rumah sakit');
-  }
-}
-
-Future<RumahSakit> deleteRS(String id) async {
-  final http.Response response = await http.delete(
-    Uri.parse('/$id'),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-  );
-
-  if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON. After deleting,
-    // you'll get an empty JSON `{}` response.
-    // Don't return `null`, otherwise `snapshot.hasData`
-    // will always return false on `FutureBuilder`.
-    return RumahSakit.fromJson(jsonDecode(response.body));
-  } else {
-    // If the server did not return a "200 OK response",
-    // then throw an exception.
-    throw Exception('Failed to delete rumah sakit.');
-  }
-}
-
 class DaftarRS extends StatefulWidget {
   const DaftarRS({Key? key}) : super(key: key);
 
@@ -60,19 +24,257 @@ class DaftarRS extends StatefulWidget {
   _DaftarRSState createState() => _DaftarRSState();
 }
 
+
 class _DaftarRSState extends State<DaftarRS> {
+  List<RumahSakit> lokasiJA = [];
+  List<RumahSakit> lokasiBO = [];
+  List<RumahSakit> lokasiDE = [];
+  List<RumahSakit> lokasiTA = [];
+  List<RumahSakit> lokasiBEK = [];
+  List<RumahSakit> lokasiL = [];
+
+  Future<void> getRSData() async {
+    const url =
+        'https://tk-pbp-d05.herokuapp.com/rumah-sakit/flutter-rs?from=flutter&to=data';
+    try {
+      final response = await http.get(Uri.parse(url));
+      Map<String, dynamic> data = jsonDecode(response.body);
+
+      for (var i = 0; i < data.length; i++) {
+        if (data[i]['lokasi'] == 'JA') {
+          lokasiJA.add(
+            RumahSakit(
+              i,
+              data[i]['nama'],
+              data[i]['lokasi'],
+              data[i]['alamat'],
+              data[i]['url_gmaps'],
+              data[i]['no_telp'],
+              data[i]['tersedia'],
+            )
+          );
+        }
+      }
+      for (var i = 0; i < data.length; i++) {
+        if (data[i]['lokasi'] == 'BO') {
+          lokasiBO.add(
+            RumahSakit(
+              i,
+              data[i]['nama'],
+              data[i]['lokasi'],
+              data[i]['alamat'],
+              data[i]['url_gmaps'],
+              data[i]['no_telp'],
+              data[i]['tersedia'],
+            )
+          );
+        }
+      }
+      for (var i = 0; i < data.length; i++) {
+        if (data[i]['lokasi'] == 'DE') {
+          lokasiDE.add(
+            RumahSakit(
+              i,
+              data[i]['nama'],
+              data[i]['lokasi'],
+              data[i]['alamat'],
+              data[i]['url_gmaps'],
+              data[i]['no_telp'],
+              data[i]['tersedia'],
+            )
+          );
+        }
+      }
+      for (var i = 0; i < data.length; i++) {
+        if (data[i]['lokasi'] == 'TA') {
+          lokasiTA.add(
+            RumahSakit(
+              data[i]['id'],
+              data[i]['nama'],
+              data[i]['lokasi'],
+              data[i]['alamat'],
+              data[i]['url_gmaps'],
+              data[i]['no_telp'],
+              data[i]['tersedia'],
+            )
+          );
+        }
+      }
+      for (var i = 0; i < data.length; i++) {
+        if (data[i]['lokasi'] == 'BEK') {
+          lokasiBEK.add(
+            RumahSakit(
+              i,
+              data[i]['nama'],
+              data[i]['lokasi'],
+              data[i]['alamat'],
+              data[i]['url_gmaps'],
+              data[i]['no_telp'],
+              data[i]['tersedia'],
+            )
+          );
+        }
+      }
+      for (var i = 0; i < data.length; i++) {
+        if (data[i]['lokasi'] == 'L') {
+          lokasiL.add(
+            RumahSakit(
+              i,
+              data[i]['nama'],
+              data[i]['lokasi'],
+              data[i]['alamat'],
+              data[i]['url_gmaps'],
+              data[i]['no_telp'],
+              data[i]['tersedia'],
+            )
+          );
+        }
+      }
+
+      setState(() {
+        lokasiJA = lokasiJA;
+        lokasiBO = lokasiBO;
+        lokasiDE = lokasiDE;
+        lokasiTA = lokasiTA;
+        lokasiBEK = lokasiBEK;
+        lokasiL = lokasiL;
+      });
+      print('Berhasil get data');
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getRSData();
+  }
+
+  Widget lokasiTitle(String lokasi) {
+    return Container(
+      child: Center(
+        child: Text(
+          lokasi,
+          style: TextStyle(
+            fontSize: 18,
+            color: Colors.blue[700],
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         padding: const EdgeInsets.all(15),
-        child: Column(
-          children: [],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                decoration: new BoxDecoration(
+                  border: Border.all(
+                    color: Colors.blue,
+                  ),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: const Text(
+                  'Di bawah ini adalah daftar Rumah Sakit yang berada di Indonesia.'
+                ),
+              ),
+
+              lokasiTitle('Jakarta'),
+              Container(
+                decoration: new BoxDecoration(
+                  border: Border.all(
+                    color: Colors.blue,
+                  ),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Column(
+                    children: lokasiJA.map((rs) => rumahSakitCard(context, rs)).toList(),
+                  ),
+              ),
+
+              lokasiTitle('Bogor'),
+              Container(
+                decoration: new BoxDecoration(
+                  border: Border.all(
+                    color: Colors.blue,
+                  ),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Column(
+                  children: lokasiBO.map((rs) => rumahSakitCard(context, rs)).toList(),
+                ),
+              ),
+
+              lokasiTitle('Depok'),
+              Container(
+                decoration: new BoxDecoration(
+                  border: Border.all(
+                    color: Colors.blue,
+                  ),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Column(
+                  children: lokasiDE.map((rs) => rumahSakitCard(context, rs)).toList(),
+                ),
+              ),
+
+              lokasiTitle('Tangerang'),
+              Container(
+                decoration: new BoxDecoration(
+                  border: Border.all(
+                    color: Colors.blue,
+                  ),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Column(
+                  children: lokasiTA.map((rs) => rumahSakitCard(context, rs)).toList(),
+                ),
+              ),
+
+              lokasiTitle('Bekasi'),
+              Container(
+                decoration: new BoxDecoration(
+                  border: Border.all(
+                    color: Colors.blue,
+                  ),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Column(
+                  children: lokasiBEK.map((rs) => rumahSakitCard(context, rs)).toList(),
+                ),
+              ),
+
+              lokasiTitle('Luar Jabodetabek'),
+              Container(
+                decoration: new BoxDecoration(
+                  border: Border.all(
+                    color: Colors.blue,
+                  ),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Column(
+                  children: lokasiL.map((rs) => rumahSakitCard(context, rs)).toList(),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add_location_rounded),
         onPressed: () => {
-          // Navigator.push(context, FormRS()),
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => FormRS())),
         },
       ),
     );
