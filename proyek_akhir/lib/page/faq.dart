@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:proyek_akhir/page/forum.dart';
 import 'package:proyek_akhir/page/home_page.dart';
+
+import 'package:http/http.dart' as http;
 
 import 'form_oksigen.dart';
 import 'oksigen.dart';
@@ -19,7 +22,14 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  var data_django;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,6 +40,22 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.indigo,
         ),
         home: HomePage());
+  }
+
+  Future<void> getData() async {
+    const url =
+        'https://tk-pbp-d05.herokuapp.com/faq/get-flutter';
+    try {
+      final response = await http.get(Uri.parse(url));
+      Map<String, dynamic> data = jsonDecode(response.body);
+
+      var faqs = data['data'];
+
+      data_django = faqs;
+
+    } catch (p) {
+      print(p);
+    }
   }
 }
 
@@ -257,6 +283,27 @@ class MyCustomFormState extends State<MyCustomForm> {
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
 
+  String question = '';
+  String answer = '';
+
+  Future<void> addData() async {
+    const url =
+        'https://tk-pbp-d05.herokuapp.com/faq/add-flutter';
+    try {
+      final response = await http.post(Uri.parse(url),
+          body: jsonEncode({
+            'question': question,
+            'answer': answer,
+          }));
+      Map<String, dynamic> data = jsonDecode(response.body);
+
+      print(data['message']);
+
+    } catch (p) {
+      print(p);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
@@ -280,6 +327,9 @@ class MyCustomFormState extends State<MyCustomForm> {
               }
               return null;
             },
+            onChanged: (value){
+              question = value;
+            }
           ),
           Text('\n'),
           TextFormField(
@@ -295,6 +345,9 @@ class MyCustomFormState extends State<MyCustomForm> {
               }
               return null;
             },
+              onChanged: (value){
+                answer = value;
+              }
           ),
           Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -312,6 +365,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Processing Data')),
                       );
+                      addData();
                     }
                   },
                   child: const Text('Submit'),
@@ -326,11 +380,11 @@ class MyCustomFormState extends State<MyCustomForm> {
 class FaqPage extends StatelessWidget {
   // Generating some dummy data
   List<Map<String, dynamic>> _items = List.generate(
-      20,
+      20, //faqs.length
       (index) => {
-            'id': index,
-            'title': 'Pertanyaan $index',
-            'description': 'Ini adalah jawaban dari pertanyaan $index.',
+            'id': index, //faqs[index]['id']
+            'title': 'Pertanyaan $index', //faqs[index]['question']
+            'description': 'Ini adalah jawaban dari pertanyaan $index.', //faqs[index]['answer']
           });
 
   @override
