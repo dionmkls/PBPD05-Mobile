@@ -6,8 +6,7 @@ import 'page/vaksin_form.dart';
 import 'page/vaksin_index.dart';
 import 'page/rs_form.dart';
 import 'page/rs_page.dart';
-import 'page/home_page.dart';
-import 'page/beranda_form.dart';
+import 'page/forum.dart';
 
 import 'package:flutter/material.dart';
 
