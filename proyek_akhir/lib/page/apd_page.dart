@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:proyek_akhir/model/apd_card.dart';
 import 'package:proyek_akhir/page/apd_form.dart';
+import 'package:proyek_akhir/page/home_page.dart';
 
 class MyApdPageWidget extends StatefulWidget {
   const MyApdPageWidget({ Key? key }) : super(key: key);
@@ -148,8 +149,10 @@ class _MyApdPageWidgetState extends State<MyApdPageWidget> {
             icon: const Icon(Icons.home),
             tooltip: 'Beranda',
             onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('This is Beranda')));
+                Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Beranda()),
+                    );
             },
           ),
           IconButton(

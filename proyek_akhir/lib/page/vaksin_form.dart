@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'form_oksigen.dart';
+import 'package:proyek_akhir/page/home_page.dart';
 import 'oksigen.dart';
 import 'apd_form.dart';
 import 'apd_page.dart';
@@ -89,8 +90,10 @@ class _LokasiFormState extends State<LokasiForm> {
               leading: Icon(Icons.home),
               title: Text('Beranda'),
               onTap: () {
-                // TODO
-              },
+                Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Beranda()),
+                    );              },
             ),
             ExpansionTile(
               title: Text("Vaksin"),
