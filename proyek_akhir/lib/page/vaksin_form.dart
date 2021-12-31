@@ -17,6 +17,7 @@ import 'vaksin_index.dart';
 import 'rs_form.dart';
 import 'rs_page.dart';
 import 'faq.dart';
+import 'forum.dart';
 
 class LokasiForm extends StatefulWidget {
   @override
@@ -40,10 +41,18 @@ class _LokasiFormState extends State<LokasiForm> {
   String jenis = "";
   String syarat = "";
 
+  void refresh() {
+    Navigator.pop(context);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => LokasiForm()),
+    );
+  }
+
   Future<void> berhasil() async {
-    const url = 'https://tk-pbp-d05.herokuapp.com/lokasi-vaksin/add';
+    const urlDjango = 'https://tk-pbp-d05.herokuapp.com/lokasi-vaksin/add';
     try {
-      final response = await http.post(Uri.parse(url),
+      final response = await http.post(Uri.parse(urlDjango),
           body: jsonEncode({
             'kota': kota,
             'nama': nama,
@@ -57,6 +66,10 @@ class _LokasiFormState extends State<LokasiForm> {
       extractedData.forEach((key, value) {
         print(value); // "data berhasil ditambahkan"
       });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Lokasi vaksin telah ditambahkan')),
+      );
+      refresh();
     } catch (p) {
       print(p);
     }
@@ -64,7 +77,6 @@ class _LokasiFormState extends State<LokasiForm> {
 
   @override
   Widget build(BuildContext context) {
-    // final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Form Penambahan Lokasi Vaksin"),
@@ -91,9 +103,10 @@ class _LokasiFormState extends State<LokasiForm> {
               title: Text('Beranda'),
               onTap: () {
                 Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Beranda()),
-                    );              },
+                  context,
+                  MaterialPageRoute(builder: (context) => Beranda()),
+                );
+              },
             ),
             ExpansionTile(
               title: Text("Vaksin"),
@@ -204,7 +217,10 @@ class _LokasiFormState extends State<LokasiForm> {
               leading: Icon(Icons.forum),
               title: Text('Forum'),
               onTap: () {
-                // TODO
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Forum()),
+                );
               },
             ),
             ListTile(
@@ -479,10 +495,6 @@ class _LokasiFormState extends State<LokasiForm> {
                     if (_formKey.currentState!.validate()) {
                       // Jika form valid, tampilkan sebuah snackbar
                       // dan simpan data dalam database/server
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                            content: Text('Lokasi vaksin telah ditambahkan')),
-                      );
                       berhasil();
                     }
                   },

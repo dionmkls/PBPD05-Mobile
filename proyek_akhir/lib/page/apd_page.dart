@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:proyek_akhir/model/apd_card.dart';
 import 'package:proyek_akhir/page/apd_form.dart';
+import 'package:proyek_akhir/page/forum.dart';
 import 'package:proyek_akhir/page/home_page.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -17,21 +18,24 @@ import 'rs_page.dart';
 import 'faq.dart';
 
 class MyApdPageWidget extends StatefulWidget {
-  const MyApdPageWidget({ Key? key }) : super(key: key);
+  const MyApdPageWidget({Key? key}) : super(key: key);
 
   @override
   _MyApdPageWidgetState createState() => _MyApdPageWidgetState();
 }
 
 Future<List<ApdCard>> fetchApdCard() async {
-  final response = await http
-      .get(Uri.parse('https://tk-pbp-d05.herokuapp.com/apd/json/'));
+  final response =
+      await http.get(Uri.parse('https://tk-pbp-d05.herokuapp.com/apd/json/'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
     // then parse the JSON.
     List<dynamic> data = jsonDecode(response.body);
-    if (data.length == 0) return <ApdCard>[ApdCard(id: 1, jenis: "Apd Kosong", url: "#", harga: 0, gambar: "#")];
+    if (data.length == 0)
+      return <ApdCard>[
+        ApdCard(id: 1, jenis: "Apd Kosong", url: "#", harga: 0, gambar: "#")
+      ];
     late List<ApdCard> lstApdCard = <ApdCard>[];
     for (int i = 0; i < data.length; i++) {
       lstApdCard.add(ApdCard.fromJson(data[i]));
@@ -66,19 +70,18 @@ class _MyApdPageWidgetState extends State<MyApdPageWidget> {
   Widget textSection1 = Container(
     padding: const EdgeInsets.only(left: 32, right: 32),
     child: RichText(
-      text: const TextSpan(
-        children: <TextSpan>[
-          TextSpan(
-            text: 'Alat Pelindung Diri (APD) adalah kelengkapan yang wajib digunakan '
-            'Alat Pelindung Diri (APD) adalah kelengkapan yang wajib digunakan '
-            'itu sendiri dan orang di sekelilingnya. (',
-          ),
-          TextSpan(
-            text: 'id.wikipedia.org',
-          ),
-          TextSpan(text: ')')
-        ]
-      ),
+      text: const TextSpan(children: <TextSpan>[
+        TextSpan(
+          text:
+              'Alat Pelindung Diri (APD) adalah kelengkapan yang wajib digunakan '
+              'Alat Pelindung Diri (APD) adalah kelengkapan yang wajib digunakan '
+              'itu sendiri dan orang di sekelilingnya. (',
+        ),
+        TextSpan(
+          text: 'id.wikipedia.org',
+        ),
+        TextSpan(text: ')')
+      ]),
     ),
   );
 
@@ -106,42 +109,47 @@ class _MyApdPageWidgetState extends State<MyApdPageWidget> {
           child: Column(
             children: [
               Align(
-                alignment: Alignment.topLeft,
-                child: Text("${apdCard.jenis}", style: TextStyle(fontSize: 18), )
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    "${apdCard.jenis}",
+                    style: TextStyle(fontSize: 18),
+                  )),
+              SizedBox(
+                height: 8,
               ),
-                SizedBox(height: 8,),
-                Align(
+              Align(
                   alignment: Alignment.topLeft,
                   child: Text(
                     "Apd berjenis ${apdCard.jenis} "
                     "dengan harga Rp.${apdCard.harga}",
                     style: TextStyle(fontSize: 12),
-                  )
-                ),
-                SizedBox(height: 8,),
-                Align(
+                  )),
+              SizedBox(
+                height: 8,
+              ),
+              Align(
                   alignment: Alignment.topLeft,
                   child: Text(
                     "dapat di pesan di:",
                     style: TextStyle(fontSize: 12),
-                  )
-                ),
-                SizedBox(height: 4,),
-                Align(
+                  )),
+              SizedBox(
+                height: 4,
+              ),
+              Align(
                   alignment: Alignment.topLeft,
                   child: ElevatedButton(
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('${apdCard.url}'))
-                      );
-                    },
-                    child: Text("DISINI")
-                  )
-                )
-              ],
-            ),
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('${apdCard.url}')));
+                      },
+                      child: Text("DISINI")))
+            ],
+          ),
         ),
-        const SizedBox(height: 16,),
+        const SizedBox(
+          height: 16,
+        ),
       ],
     );
   }
@@ -174,9 +182,9 @@ class _MyApdPageWidgetState extends State<MyApdPageWidget> {
               title: Text('Beranda'),
               onTap: () {
                 Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Beranda()),
-                    );
+                  context,
+                  MaterialPageRoute(builder: (context) => Beranda()),
+                );
               },
             ),
             ExpansionTile(
@@ -288,7 +296,10 @@ class _MyApdPageWidgetState extends State<MyApdPageWidget> {
               leading: Icon(Icons.forum),
               title: Text('Forum'),
               onTap: () {
-                // TODO
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Forum()),
+                );
               },
             ),
             ListTile(
@@ -309,71 +320,82 @@ class _MyApdPageWidgetState extends State<MyApdPageWidget> {
           children: [
             textSectionJudul,
             textSection1,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(32),
-                  alignment: Alignment.centerRight,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => MyApdPageWidget()),
-                      );
-                    },
-                    child: const Text('Refresh APD', textAlign: TextAlign.center,),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Container(
+                padding: const EdgeInsets.all(32),
+                alignment: Alignment.centerRight,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MyApdPageWidget()),
+                    );
+                  },
+                  child: const Text(
+                    'Refresh APD',
+                    textAlign: TextAlign.center,
                   ),
                 ),
-                Container(
-                  padding: const EdgeInsets.all(32),
-                  alignment: Alignment.centerRight,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ApdFormRoute()),
-                      );
-                    },
-                    child: const Text('Tambah APD', textAlign: TextAlign.center,),
+              ),
+              Container(
+                padding: const EdgeInsets.all(32),
+                alignment: Alignment.centerRight,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ApdFormRoute()),
+                    );
+                  },
+                  child: const Text(
+                    'Tambah APD',
+                    textAlign: TextAlign.center,
                   ),
                 ),
-              ]
-            ),
+              ),
+            ]),
             Container(
-              padding: const EdgeInsets.only(left: 32, right: 32,),
-              color: Colors.blue,
-              child: Column(
-                children: [
-                  const SizedBox(height: 16,),
+                padding: const EdgeInsets.only(
+                  left: 32,
+                  right: 32,
+                ),
+                color: Colors.blue,
+                child: Column(children: [
+                  const SizedBox(
+                    height: 16,
+                  ),
                   FutureBuilder<List<ApdCard>>(
                     future: futureApdCard,
                     builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return apdCardSection(snapshot.data);
-                    } else if (snapshot.hasError) {
-                      return Container(
-                        child: Column(
-                          children: [
-                            apdCardSection(<ApdCard>[(ApdCard(id: 0, jenis: 'Contoh Apd', url: '#', harga: 10, gambar: '#'))]),
-                            Text('${snapshot.error}'),
-                            const SizedBox(height: 16,),
-                          ]
-                        )
-                      );
-                    }
+                      if (snapshot.hasData) {
+                        return apdCardSection(snapshot.data);
+                      } else if (snapshot.hasError) {
+                        return Container(
+                            child: Column(children: [
+                          apdCardSection(<ApdCard>[
+                            (ApdCard(
+                                id: 0,
+                                jenis: 'Contoh Apd',
+                                url: '#',
+                                harga: 10,
+                                gambar: '#'))
+                          ]),
+                          Text('${snapshot.error}'),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                        ]));
+                      }
 
-                    // By default, show a loading spinner.
-                    return const CircularProgressIndicator();
+                      // By default, show a loading spinner.
+                      return const CircularProgressIndicator();
                     },
                   )
-                ]
-              )
-            ),
+                ])),
           ],
         ),
-
       ),
     );
   }

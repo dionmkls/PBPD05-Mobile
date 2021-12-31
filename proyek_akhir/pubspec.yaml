@@ -24,7 +24,6 @@ dependencies:
   font_awesome_flutter: <9.2.0
   flutter:
     sdk: flutter
-  footer:
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -49,7 +48,11 @@ flutter:
   assets:  
         - assets/posisi.png
         - assets/images/ayo_vaksin.png
+<<<<<<< HEAD
         - assets/images/faq.png
+=======
+        - assets/images/illustration.png
+>>>>>>> fdcc37169cf3d59c505f68c69af4806d825e55e3
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -72,6 +75,14 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  fonts:
+    - family: Inter
+      fonts: 
+        - asset: assets/fonts/Inter-Regular.ttf
+        - asset: assets/fonts/Inter-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Inter-Medium.ttf
+          weight: 300
   # fonts:
   #   - family: Schyler
   #     fonts:
