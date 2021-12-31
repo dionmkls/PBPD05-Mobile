@@ -14,6 +14,10 @@ import 'oksigen.dart';
 import 'rs_form.dart';
 import 'rs_page.dart';
 import 'faq.dart';
+import '../model/oksigen_model.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 Size screenSize(BuildContext context) {
   return MediaQuery.of(context).size;
@@ -32,6 +36,21 @@ double screenHeight(BuildContext context,
 double screenHeightExcludingToolbar(BuildContext context,
     {double dividedBy = 1}) {
   return screenHeight(context, dividedBy: dividedBy, reducedBy: kToolbarHeight);
+}
+
+Future<Album> fetchAlbum() async {
+  final response = await http
+      .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/1'));
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    return Album.fromJson(jsonDecode(response.body));
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  }
 }
 
 void main() {
@@ -54,9 +73,10 @@ class MyStatefulWidget extends StatefulWidget {
 
 class MyState extends State<MyStatefulWidget> {
   int light = 1;
+  late Future<Album> futureAlbum;
+  Album album = new Album(url: "", address: "", phone: "", domisili: "");
   Brightness _brightness = Brightness.light;
-  static const warnagradien =
-      LinearGradient(colors: <Color>[Color(0xff71b7e6), Color(0xff9b59b6)]);
+  static const warnagradien = LinearGradient(colors: <Color>[Color(0xff71b7e6), Color(0xff9b59b6)]);
   final myController = TextEditingController();
 
   @override
@@ -99,6 +119,12 @@ class MyState extends State<MyStatefulWidget> {
         );
       },
     );
+  }
+
+  @override
+  void initState() {
+        super.initState();
+        futureAlbum = fetchAlbum();
   }
 
   @override
@@ -281,135 +307,163 @@ class MyState extends State<MyStatefulWidget> {
                   SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
-                        Container(
-                          child: Text("Jakarta",
-                              style: GoogleFonts.balooBhaina(
-                                fontSize: 25,
-                              )),
-                        ),
-                        Card(
-                          clipBehavior: Clip.antiAlias,
-                          child: Column(
-                            children: [
-                              Image.asset('assets/posisi.png'),
-                              ListTile(
-                                leading: FaIcon(FontAwesomeIcons.globe),
-                                title: const Text('www.facebook.com'),
-                              ),
-                              ListTile(
-                                leading: Icon(Icons.home),
-                                title: const Text('California, US'),
-                              ),
-                              ListTile(
-                                leading: Icon(Icons.phone),
-                                title: const Text('085727134501'),
-                              ),
-                            ],
-                          ),
+                        FutureBuilder<Album>(
+                            future: futureAlbum,
+                            builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                    album = snapshot.data!;
+                                }
+                                else if (snapshot.hasError) {
+                                    return Text('${snapshot.error}');
+                                }
+
+                                // By default, show a loading spinner.
+                                return Container();
+                            },
                         ),
                         Container(
-                          child: Text("Bogor",
-                              style: GoogleFonts.balooBhaina(
-                                fontSize: 25,
-                              )),
+                            child: Text(
+                                "Jakarta",
+                                style: GoogleFonts.balooBhaina(
+                                    fontSize: 25,
+                                )
+                            ),
                         ),
                         Card(
-                          clipBehavior: Clip.antiAlias,
-                          child: Column(
-                            children: [
-                              Image.asset('assets/posisi.png'),
-                              ListTile(
-                                leading: FaIcon(FontAwesomeIcons.globe),
-                                title: const Text('www.facebook.com'),
-                              ),
-                              ListTile(
-                                leading: Icon(Icons.home),
-                                title: const Text('California, US'),
-                              ),
-                              ListTile(
-                                leading: Icon(Icons.phone),
-                                title: const Text('085727134501'),
-                              ),
-                            ],
-                          ),
+                            clipBehavior: Clip.antiAlias,
+                            child: Column(
+                                children: [
+                                    Image.asset('assets/posisi.png'),
+                                    ListTile(
+                                        leading: FaIcon(FontAwesomeIcons.globe),
+                                        title: Text("${album.url}"),
+                                    ),    
+                                    ListTile(
+                                        leading: Icon(Icons.home),
+                                        title: Text("${album.address}"),
+                                    ),  
+                                    ListTile(
+                                        leading: Icon(Icons.phone),
+                                        title: Text("${album.phone}"),
+                                    ),                                                      
+                                ],
+                            ),
                         ),
+
                         Container(
-                          child: Text("Depok",
-                              style: GoogleFonts.balooBhaina(
-                                fontSize: 25,
-                              )),
+                            child: Text(
+                                "Bogor",
+                                style: GoogleFonts.balooBhaina(
+                                    fontSize: 25,
+                                )
+                            ),
                         ),
                         Card(
-                          clipBehavior: Clip.antiAlias,
-                          child: Column(
-                            children: [
-                              Image.asset('assets/posisi.png'),
-                              ListTile(
-                                leading: FaIcon(FontAwesomeIcons.globe),
-                                title: const Text('www.facebook.com'),
-                              ),
-                              ListTile(
-                                leading: Icon(Icons.home),
-                                title: const Text('California, US'),
-                              ),
-                              ListTile(
-                                leading: Icon(Icons.phone),
-                                title: const Text('085727134501'),
-                              ),
-                            ],
-                          ),
+                            clipBehavior: Clip.antiAlias,
+                            child: Column(
+                                children: [
+                                    Image.asset('assets/posisi.png'),
+                                    ListTile(
+                                        leading: FaIcon(FontAwesomeIcons.globe),
+                                        title: Text("${album.url}"),
+                                    ),    
+                                    ListTile(
+                                        leading: Icon(Icons.home),
+                                        title: Text("${album.address}"),
+                                    ),  
+                                    ListTile(
+                                        leading: Icon(Icons.phone),
+                                        title: Text("${album.phone}"),
+                                    ),                                                      
+                                ],
+                            ),
                         ),
+
                         Container(
-                          child: Text("Tangerang",
-                              style: GoogleFonts.balooBhaina(
-                                fontSize: 25,
-                              )),
+                            child: Text(
+                                "Depok",
+                                style: GoogleFonts.balooBhaina(
+                                    fontSize: 25,
+                                )
+                            ),
                         ),
                         Card(
-                          clipBehavior: Clip.antiAlias,
-                          child: Column(
-                            children: [
-                              Image.asset('assets/posisi.png'),
-                              ListTile(
-                                leading: FaIcon(FontAwesomeIcons.globe),
-                                title: const Text('www.facebook.com'),
-                              ),
-                              ListTile(
-                                leading: Icon(Icons.home),
-                                title: const Text('California, US'),
-                              ),
-                              ListTile(
-                                leading: Icon(Icons.phone),
-                                title: const Text('085727134501'),
-                              ),
-                            ],
-                          ),
+                            clipBehavior: Clip.antiAlias,
+                            child: Column(
+                                children: [
+                                    Image.asset('assets/posisi.png'),
+                                    ListTile(
+                                        leading: FaIcon(FontAwesomeIcons.globe),
+                                        title: Text("${album.url}"),
+                                    ),    
+                                    ListTile(
+                                        leading: Icon(Icons.home),
+                                        title: Text("${album.address}"),
+                                    ),  
+                                    ListTile(
+                                        leading: Icon(Icons.phone),
+                                        title: Text("${album.phone}"),
+                                    ),                                                      
+                                ],
+                            ),
                         ),
+
                         Container(
-                          child: Text("Bekasi",
-                              style: GoogleFonts.balooBhaina(
-                                fontSize: 25,
-                              )),
+                            child: Text(
+                                "Tangerang",
+                                style: GoogleFonts.balooBhaina(
+                                    fontSize: 25,
+                                )
+                            ),
                         ),
                         Card(
-                          clipBehavior: Clip.antiAlias,
-                          child: Column(
-                            children: [
-                              Image.asset('assets/posisi.png'),
-                              ListTile(
-                                leading: FaIcon(FontAwesomeIcons.globe),
-                                title: const Text('www.facebook.com'),
-                              ),
-                              ListTile(
-                                leading: Icon(Icons.home),
-                                title: const Text('California, US'),
-                              ),
-                              ListTile(
-                                leading: Icon(Icons.phone),
-                                title: const Text('085727134501'),
-                              ),
-                            ],
-                          ),
+                            clipBehavior: Clip.antiAlias,
+                            child: Column(
+                                children: [
+                                    Image.asset('assets/posisi.png'),
+                                    ListTile(
+                                        leading: FaIcon(FontAwesomeIcons.globe),
+                                        title: Text("${album.url}"),
+                                    ),    
+                                    ListTile(
+                                        leading: Icon(Icons.home),
+                                        title: Text("${album.address}"),
+                                    ),  
+                                    ListTile(
+                                        leading: Icon(Icons.phone),
+                                        title: Text("${album.phone}"),
+                                    ),                                                      
+                                ],
+                            ),
+                        ),
+
+                        Container(
+                            child: Text(
+                                "Bekasi",
+                                style: GoogleFonts.balooBhaina(
+                                    fontSize: 25,
+                                )
+                            ),
+                        ),
+                        Card(
+                            clipBehavior: Clip.antiAlias,
+                            child: Column(
+                                children: [
+                                    Image.asset('assets/posisi.png'),
+                                    ListTile(
+                                        leading: FaIcon(FontAwesomeIcons.globe),
+                                        title: Text("${album.url}"),
+                                    ),    
+                                    ListTile(
+                                        leading: Icon(Icons.home),
+                                        title: Text("${album.address}"),
+                                    ),  
+                                    ListTile(
+                                        leading: Icon(Icons.phone),
+                                        title: Text("${album.phone}"),
+                                    ),                                                      
+                                ],
+                            ),
                         ),
                       ],
                     ),
