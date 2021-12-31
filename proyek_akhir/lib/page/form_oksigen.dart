@@ -1,3 +1,5 @@
+import 'package:proyek_akhir/page/forum.dart';
+
 import '../main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -134,10 +136,11 @@ class MyState extends State<MyStatefulWidget> {
                 leading: Icon(Icons.home),
                 title: Text('Beranda'),
                 onTap: () {
-                Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Beranda()),
-                    );                },
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Beranda()),
+                  );
+                },
               ),
               ExpansionTile(
                 title: Text("Vaksin"),
@@ -248,7 +251,10 @@ class MyState extends State<MyStatefulWidget> {
                 leading: Icon(Icons.forum),
                 title: Text('Forum'),
                 onTap: () {
-                  // TODO
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Forum()),
+                  );
                 },
               ),
               ListTile(

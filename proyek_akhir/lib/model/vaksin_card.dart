@@ -24,8 +24,8 @@ class _VaksinCardState extends State<VaksinCard> {
       Map<String, dynamic> data = jsonDecode(response.body);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-            content: Text(data['nama'] +
-                ' berhasil dihapus, mohon refresh (hot restart) halaman.')),
+            content: Text(
+                data['nama'] + ' berhasil dihapus, mohon refresh halaman.')),
       );
       print('berhasil ke delete');
     } catch (p) {
