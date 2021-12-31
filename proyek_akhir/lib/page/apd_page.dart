@@ -6,6 +6,16 @@ import 'package:proyek_akhir/model/apd_card.dart';
 import 'package:proyek_akhir/page/apd_form.dart';
 import 'package:proyek_akhir/page/home_page.dart';
 
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'form_oksigen.dart';
+import 'oksigen.dart';
+import 'vaksin_form.dart';
+import 'vaksin_index.dart';
+import 'rs_form.dart';
+import 'rs_page.dart';
+import 'faq.dart';
+
 class MyApdPageWidget extends StatefulWidget {
   const MyApdPageWidget({ Key? key }) : super(key: key);
 
@@ -142,44 +152,158 @@ class _MyApdPageWidgetState extends State<MyApdPageWidget> {
       appBar: AppBar(
         // title: const Text('AppBar Demo'),
         title: const Text('PBP D05'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.home),
-            tooltip: 'Beranda',
-            onPressed: () {
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text(
+                'Navigation Menu',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text('Beranda'),
+              onTap: () {
                 Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => Beranda()),
                     );
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.apps),
-            tooltip: 'Fitur',
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('This is Fitur')));
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.speaker_notes),
-            tooltip: 'Forum',
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('This is Forum')));
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.help),
-            tooltip: 'FAQ',
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('This is FAQ')));
-            },
-          ),
-        ],
+              },
+            ),
+            ExpansionTile(
+              title: Text("Vaksin"),
+              leading: FaIcon(FontAwesomeIcons.syringe),
+              children: <Widget>[
+                ListTile(
+                  leading: FaIcon(FontAwesomeIcons.syringe),
+                  title: Text('Lokasi'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Vaksin()),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: FaIcon(FontAwesomeIcons.syringe),
+                  title: Text('Form'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LokasiForm()),
+                    );
+                  },
+                ),
+              ],
+            ),
+            ExpansionTile(
+              title: Text("Oksigen"),
+              leading: FaIcon(FontAwesomeIcons.medkit),
+              children: <Widget>[
+                ListTile(
+                  leading: FaIcon(FontAwesomeIcons.medkit),
+                  title: Text('Lokasi'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Oksigen()),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: FaIcon(FontAwesomeIcons.medkit),
+                  title: Text('Form'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => FormOksigen()),
+                    );
+                  },
+                ),
+              ],
+            ),
+            ExpansionTile(
+              title: Text("APD"),
+              leading: FaIcon(FontAwesomeIcons.tshirt),
+              children: <Widget>[
+                ListTile(
+                  leading: FaIcon(FontAwesomeIcons.tshirt),
+                  title: Text('Lokasi'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MyApdPageWidget()),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: FaIcon(FontAwesomeIcons.tshirt),
+                  title: Text('Form'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ApdFormRoute()),
+                    );
+                  },
+                ),
+              ],
+            ),
+            ExpansionTile(
+              title: Text("Rumah Sakit"),
+              leading: FaIcon(FontAwesomeIcons.hospital),
+              children: <Widget>[
+                ListTile(
+                  leading: FaIcon(FontAwesomeIcons.hospital),
+                  title: Text('Lokasi'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => DaftarRS()),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: FaIcon(FontAwesomeIcons.hospital),
+                  title: Text('Form'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => FormRS()),
+                    );
+                  },
+                ),
+              ],
+            ),
+            ListTile(
+              leading: Icon(Icons.forum),
+              title: Text('Forum'),
+              onTap: () {
+                // TODO
+              },
+            ),
+            ListTile(
+              leading: FaIcon(FontAwesomeIcons.questionCircle),
+              title: Text('FAQ'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MyApp()),
+                );
+              },
+            ),
+          ],
+        ),
       ),
-      // body: const MyTable(),
       body: SingleChildScrollView(
         child: Column(
           children: [
