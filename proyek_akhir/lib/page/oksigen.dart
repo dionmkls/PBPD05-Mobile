@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:footer/footer.dart';
 import 'package:footer/footer_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:proyek_akhir/page/forum.dart';
 
 import 'form_oksigen.dart';
 import 'apd_form.dart';
@@ -140,10 +141,11 @@ class MyState extends State<MyStatefulWidget> {
                 leading: Icon(Icons.home),
                 title: Text('Beranda'),
                 onTap: () {
-                Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Beranda()),
-                    );                },
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Beranda()),
+                  );
+                },
               ),
               ExpansionTile(
                 title: Text("Vaksin"),
@@ -254,7 +256,10 @@ class MyState extends State<MyStatefulWidget> {
                 leading: Icon(Icons.forum),
                 title: Text('Forum'),
                 onTap: () {
-                  // TODO
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Forum()),
+                  );
                 },
               ),
               ListTile(

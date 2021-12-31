@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:proyek_akhir/page/all_covid_data_page.dart';
 import 'package:proyek_akhir/page/beranda_form.dart';
+import 'package:proyek_akhir/page/forum.dart';
 import 'package:proyek_akhir/page/newvaksin.dart';
 import 'package:proyek_akhir/page/vaksin_charts_page.dart';
-
 
 import '../main.dart';
 import 'package:flutter/cupertino.dart';
@@ -35,7 +35,7 @@ class _BerandaState extends State<Beranda> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+        appBar: AppBar(
           title: Text('''PBP D-05'''),
           // actions: <Widget>[
           //   IconButton(
@@ -65,10 +65,11 @@ class _BerandaState extends State<Beranda> {
                 leading: Icon(Icons.home),
                 title: Text('Beranda'),
                 onTap: () {
-                Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Beranda()),
-                    );                },
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Beranda()),
+                  );
+                },
               ),
               ExpansionTile(
                 title: Text("Vaksin"),
@@ -179,7 +180,10 @@ class _BerandaState extends State<Beranda> {
                 leading: Icon(Icons.forum),
                 title: Text('Forum'),
                 onTap: () {
-                  // TODO
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Forum()),
+                  );
                 },
               ),
               ListTile(
@@ -195,204 +199,197 @@ class _BerandaState extends State<Beranda> {
             ],
           ),
         ),
-      body: SingleChildScrollView(
-        child: Container(
-        padding: const EdgeInsets.all(30),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Text(
-              "Apa itu COVID-19?",
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                  letterSpacing: 0.5,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700),
-            ),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(0, 20, 50, 20),
-              child: Text(
-                "COVID-19 adalah penyakit menular yang disebabkan oleh jenis coronavirus yang baru ditemukan. Virus baru dan penyakit yang disebabkannya ini tidak dikenal sebelum mulainya wabah di Wuhan, Tiongkok, bulan Desember 2019. COVID-19 ini sekarang menjadi sebuah pandemi yang terjadi di banyak negara di seluruh dunia.",
-                style: TextStyle(letterSpacing: 0.5, fontSize: 14),
-              ),
-            ),
-            const Text(
-              "Apa itu Vaksinasi COVID-19?",
-              textAlign: TextAlign.right,
-              style: TextStyle(
-                  letterSpacing: 0.5,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700),
-            ),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(50, 20, 0, 20),
-              child: Text(
-                "Vaksinasi Covid-19 merupakan salah satu upaya pemerintah Indonesia dalam menangani masalah Covid-19. Vaksinasi Covid-19 bertujuan untuk menciptakan kekebalan kelompok (herd immunity) agar masyarakat menjadi lebih produktif dalam menjalankan aktivitas kesehariannya.",
-                textAlign: TextAlign.right,
-                style: TextStyle(letterSpacing: 0.5, fontSize: 14),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: Image.asset('assets/images/ayo_vaksin.png'),
-            ),
-
-            TextButton(
-              style: TextButton.styleFrom(
-                primary: Colors.blue,
-              ),
-              onPressed: () {
-                Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => BerandaForm() // FormCovid()
+        body: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.all(30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const Text(
+                  "Apa itu COVID-19?",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                      letterSpacing: 0.5,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700),
+                ),
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(0, 20, 50, 20),
+                  child: Text(
+                    "COVID-19 adalah penyakit menular yang disebabkan oleh jenis coronavirus yang baru ditemukan. Virus baru dan penyakit yang disebabkannya ini tidak dikenal sebelum mulainya wabah di Wuhan, Tiongkok, bulan Desember 2019. COVID-19 ini sekarang menjadi sebuah pandemi yang terjadi di banyak negara di seluruh dunia.",
+                    style: TextStyle(letterSpacing: 0.5, fontSize: 14),
+                  ),
+                ),
+                const Text(
+                  "Apa itu Vaksinasi COVID-19?",
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                      letterSpacing: 0.5,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700),
+                ),
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(50, 20, 0, 20),
+                  child: Text(
+                    "Vaksinasi Covid-19 merupakan salah satu upaya pemerintah Indonesia dalam menangani masalah Covid-19. Vaksinasi Covid-19 bertujuan untuk menciptakan kekebalan kelompok (herd immunity) agar masyarakat menjadi lebih produktif dalam menjalankan aktivitas kesehariannya.",
+                    textAlign: TextAlign.right,
+                    style: TextStyle(letterSpacing: 0.5, fontSize: 14),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Image.asset('assets/images/ayo_vaksin.png'),
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    primary: Colors.blue,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => BerandaForm() // FormCovid()
+                        ));
+                  },
+                  child: const Text('Input data'),
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    primary: Colors.blue,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const VaksinChartsPage()));
+                  },
+                  child: const Text('Statistik Vaksinasi Indonesia'),
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    primary: Colors.blue,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const ChartPage(
+                              title: 'Chart Vaksinasi',
+                            )));
+                  },
+                  child: const Text('Chart Vaksinasi Indonesia'),
+                ),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    primary: Colors.blue,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const CovDataPage(
+                              title: 'Data Covid',
+                            )));
+                  },
+                  child: const Text('Lihat Data Covid'),
                 )
-                );
-              },
-              child: const Text('Input data'),
+              ],
             ),
+          ),
+        ));
 
-            TextButton(
-              style: TextButton.styleFrom(
-                primary: Colors.blue,
-              ),
-              onPressed: () {
-                Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => const VaksinChartsPage()
-                )
-                );
-              },
-              child: const Text('Statistik Vaksinasi Indonesia'),
-            ),
+    // @override
+    // Widget build(BuildContext context) {
+    //   return SingleChildScrollView(
+    //     child: Container(
+    //       padding: const EdgeInsets.all(30),
+    //       child: Column(
+    //         crossAxisAlignment: CrossAxisAlignment.stretch,
+    //         children: [
+    //           const Text(
+    //             "Apa itu COVID-19?",
+    //             textAlign: TextAlign.left,
+    //             style: TextStyle(
+    //                 letterSpacing: 0.5,
+    //                 fontSize: 16,
+    //                 fontWeight: FontWeight.w700),
+    //           ),
+    //           const Padding(
+    //             padding: EdgeInsets.fromLTRB(0, 20, 50, 20),
+    //             child: Text(
+    //               "COVID-19 adalah penyakit menular yang disebabkan oleh jenis coronavirus yang baru ditemukan. Virus baru dan penyakit yang disebabkannya ini tidak dikenal sebelum mulainya wabah di Wuhan, Tiongkok, bulan Desember 2019. COVID-19 ini sekarang menjadi sebuah pandemi yang terjadi di banyak negara di seluruh dunia.",
+    //               style: TextStyle(letterSpacing: 0.5, fontSize: 14),
+    //             ),
+    //           ),
+    //           const Text(
+    //             "Apa itu Vaksinasi COVID-19?",
+    //             textAlign: TextAlign.right,
+    //             style: TextStyle(
+    //                 letterSpacing: 0.5,
+    //                 fontSize: 16,
+    //                 fontWeight: FontWeight.w700),
+    //           ),
+    //           const Padding(
+    //             padding: EdgeInsets.fromLTRB(50, 20, 0, 20),
+    //             child: Text(
+    //               "Vaksinasi Covid-19 merupakan salah satu upaya pemerintah Indonesia dalam menangani masalah Covid-19. Vaksinasi Covid-19 bertujuan untuk menciptakan kekebalan kelompok (herd immunity) agar masyarakat menjadi lebih produktif dalam menjalankan aktivitas kesehariannya.",
+    //               textAlign: TextAlign.right,
+    //               style: TextStyle(letterSpacing: 0.5, fontSize: 14),
+    //             ),
+    //           ),
+    //           Padding(
+    //             padding: const EdgeInsets.all(10),
+    //             child: Image.asset('assets/images/ayo_vaksin.png'),
+    //           ),
 
-            TextButton(
-              style: TextButton.styleFrom(
-                primary: Colors.blue,
-              ),
-              onPressed: () {
-                Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => const ChartPage(title: 'Chart Vaksinasi',)
-                )
-                );
-              },
-              child: const Text('Chart Vaksinasi Indonesia'),
-            ),
+    //           TextButton(
+    //             style: TextButton.styleFrom(
+    //               primary: Colors.blue,
+    //             ),
+    //             onPressed: () {
+    //               Navigator.of(context)
+    //               .push(MaterialPageRoute(builder: (context) => BerandaForm() // FormCovid()
+    //               )
+    //               );
+    //             },
+    //             child: const Text('Input data'),
+    //           ),
 
-            TextButton(
-              style: TextButton.styleFrom(
-                primary: Colors.blue,
-              ),
-              onPressed: () {
-                Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => const CovDataPage(title: 'Data Covid',)
-                )
-                );
-              },
-              child: const Text('Lihat Data Covid'),
-            )
+    //           TextButton(
+    //             style: TextButton.styleFrom(
+    //               primary: Colors.blue,
+    //             ),
+    //             onPressed: () {
+    //               Navigator.of(context)
+    //               .push(MaterialPageRoute(builder: (context) => const VaksinChartsPage()
+    //               )
+    //               );
+    //             },
+    //             child: const Text('Statistik Vaksinasi Indonesia'),
+    //           ),
 
-          ],
-        ),
-      ),
-    ));
+    //           TextButton(
+    //             style: TextButton.styleFrom(
+    //               primary: Colors.blue,
+    //             ),
+    //             onPressed: () {
+    //               Navigator.of(context)
+    //               .push(MaterialPageRoute(builder: (context) => const ChartPage(title: 'Chart Vaksinasi',)
+    //               )
+    //               );
+    //             },
+    //             child: const Text('Chart Vaksinasi Indonesia'),
+    //           ),
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return SingleChildScrollView(
-  //     child: Container(
-  //       padding: const EdgeInsets.all(30),
-  //       child: Column(
-  //         crossAxisAlignment: CrossAxisAlignment.stretch,
-  //         children: [
-  //           const Text(
-  //             "Apa itu COVID-19?",
-  //             textAlign: TextAlign.left,
-  //             style: TextStyle(
-  //                 letterSpacing: 0.5,
-  //                 fontSize: 16,
-  //                 fontWeight: FontWeight.w700),
-  //           ),
-  //           const Padding(
-  //             padding: EdgeInsets.fromLTRB(0, 20, 50, 20),
-  //             child: Text(
-  //               "COVID-19 adalah penyakit menular yang disebabkan oleh jenis coronavirus yang baru ditemukan. Virus baru dan penyakit yang disebabkannya ini tidak dikenal sebelum mulainya wabah di Wuhan, Tiongkok, bulan Desember 2019. COVID-19 ini sekarang menjadi sebuah pandemi yang terjadi di banyak negara di seluruh dunia.",
-  //               style: TextStyle(letterSpacing: 0.5, fontSize: 14),
-  //             ),
-  //           ),
-  //           const Text(
-  //             "Apa itu Vaksinasi COVID-19?",
-  //             textAlign: TextAlign.right,
-  //             style: TextStyle(
-  //                 letterSpacing: 0.5,
-  //                 fontSize: 16,
-  //                 fontWeight: FontWeight.w700),
-  //           ),
-  //           const Padding(
-  //             padding: EdgeInsets.fromLTRB(50, 20, 0, 20),
-  //             child: Text(
-  //               "Vaksinasi Covid-19 merupakan salah satu upaya pemerintah Indonesia dalam menangani masalah Covid-19. Vaksinasi Covid-19 bertujuan untuk menciptakan kekebalan kelompok (herd immunity) agar masyarakat menjadi lebih produktif dalam menjalankan aktivitas kesehariannya.",
-  //               textAlign: TextAlign.right,
-  //               style: TextStyle(letterSpacing: 0.5, fontSize: 14),
-  //             ),
-  //           ),
-  //           Padding(
-  //             padding: const EdgeInsets.all(10),
-  //             child: Image.asset('assets/images/ayo_vaksin.png'),
-  //           ),
+    //           TextButton(
+    //             style: TextButton.styleFrom(
+    //               primary: Colors.blue,
+    //             ),
+    //             onPressed: () {
+    //               Navigator.of(context)
+    //               .push(MaterialPageRoute(builder: (context) => const CovDataPage(title: 'Data Covid',)
+    //               )
+    //               );
+    //             },
+    //             child: const Text('Lihat Data Covid'),
+    //           )
 
-  //           TextButton(
-  //             style: TextButton.styleFrom(
-  //               primary: Colors.blue,
-  //             ),
-  //             onPressed: () {
-  //               Navigator.of(context)
-  //               .push(MaterialPageRoute(builder: (context) => BerandaForm() // FormCovid()
-  //               )
-  //               );
-  //             },
-  //             child: const Text('Input data'),
-  //           ),
-
-  //           TextButton(
-  //             style: TextButton.styleFrom(
-  //               primary: Colors.blue,
-  //             ),
-  //             onPressed: () {
-  //               Navigator.of(context)
-  //               .push(MaterialPageRoute(builder: (context) => const VaksinChartsPage()
-  //               )
-  //               );
-  //             },
-  //             child: const Text('Statistik Vaksinasi Indonesia'),
-  //           ),
-
-  //           TextButton(
-  //             style: TextButton.styleFrom(
-  //               primary: Colors.blue,
-  //             ),
-  //             onPressed: () {
-  //               Navigator.of(context)
-  //               .push(MaterialPageRoute(builder: (context) => const ChartPage(title: 'Chart Vaksinasi',)
-  //               )
-  //               );
-  //             },
-  //             child: const Text('Chart Vaksinasi Indonesia'),
-  //           ),
-
-  //           TextButton(
-  //             style: TextButton.styleFrom(
-  //               primary: Colors.blue,
-  //             ),
-  //             onPressed: () {
-  //               Navigator.of(context)
-  //               .push(MaterialPageRoute(builder: (context) => const CovDataPage(title: 'Data Covid',)
-  //               )
-  //               );
-  //             },
-  //             child: const Text('Lihat Data Covid'),
-  //           )
-
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-}}
+    //         ],
+    //       ),
+    //     ),
+    //   );
+    // }
+  }
+}

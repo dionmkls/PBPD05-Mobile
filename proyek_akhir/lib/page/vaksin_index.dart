@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:proyek_akhir/page/forum.dart';
 import 'dart:convert';
 import '../model/vaksin.dart';
 import '../model/vaksin_card.dart';
@@ -262,7 +263,10 @@ class _VaksinState extends State<Vaksin> {
               leading: Icon(Icons.forum),
               title: Text('Forum'),
               onTap: () {
-                // TODO
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Forum()),
+                );
               },
             ),
             ListTile(

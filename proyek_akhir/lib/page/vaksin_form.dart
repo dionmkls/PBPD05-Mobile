@@ -17,6 +17,7 @@ import 'vaksin_index.dart';
 import 'rs_form.dart';
 import 'rs_page.dart';
 import 'faq.dart';
+import 'forum.dart';
 
 class LokasiForm extends StatefulWidget {
   @override
@@ -76,7 +77,6 @@ class _LokasiFormState extends State<LokasiForm> {
 
   @override
   Widget build(BuildContext context) {
-    // final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Form Penambahan Lokasi Vaksin"),
@@ -217,7 +217,10 @@ class _LokasiFormState extends State<LokasiForm> {
               leading: Icon(Icons.forum),
               title: Text('Forum'),
               onTap: () {
-                // TODO
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Forum()),
+                );
               },
             ),
             ListTile(
