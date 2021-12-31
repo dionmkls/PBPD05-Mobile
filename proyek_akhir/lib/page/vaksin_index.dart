@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:proyek_akhir/page/home_page.dart';
 import 'dart:convert';
 import '../model/vaksin.dart';
 import '../model/vaksin_card.dart';
@@ -163,7 +164,10 @@ class _VaksinState extends State<Vaksin> {
               leading: Icon(Icons.home),
               title: Text('Beranda'),
               onTap: () {
-                // TODO
+                Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Beranda()),
+                    );
               },
             ),
             ExpansionTile(

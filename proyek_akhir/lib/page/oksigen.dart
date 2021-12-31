@@ -8,6 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'form_oksigen.dart';
 import 'apd_form.dart';
 import 'apd_page.dart';
+import 'package:proyek_akhir/page/home_page.dart';
 import 'vaksin_form.dart';
 import 'vaksin_index.dart';
 import 'oksigen.dart';
@@ -139,8 +140,10 @@ class MyState extends State<MyStatefulWidget> {
                 leading: Icon(Icons.home),
                 title: Text('Beranda'),
                 onTap: () {
-                  // TODO
-                },
+                Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Beranda()),
+                    );                },
               ),
               ExpansionTile(
                 title: Text("Vaksin"),
