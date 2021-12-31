@@ -9,8 +9,6 @@ import '../main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:footer/footer.dart';
-import 'package:footer/footer_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'form_oksigen.dart';
