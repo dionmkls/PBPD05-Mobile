@@ -1,4 +1,21 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+Future<String> kirimApd(Map<String, dynamic> mapPost) async {
+  String url = 'https://tk-pbp-d05.herokuapp.com/apd/add-apd-flutter/';
+  Map<String, String> headers = new Map<String, String>();
+  headers['Accept'] = 'application/json';
+  headers['Content-type'] = 'application/json';
+
+  http.Response response = await http.post(
+    Uri.parse(url),
+    headers: headers,
+    body: jsonEncode(mapPost),
+  );
+
+  return response.statusCode.toString();
+}
 
 class ApdFormRoute extends StatelessWidget {
   ApdFormRoute({Key? key}) : super(key: key);
@@ -132,7 +149,7 @@ class _ApdFormRouteInnerState extends State<ApdFormRouteInner> {
                       decoration: new InputDecoration(
                         fillColor: Colors.white,
                         filled: true,
-                        hintText: "URL",
+                        hintText: "https://google.com",
                         labelText: "URL lokasi penyedia APD",
                         icon: Icon(Icons.room),
                         border: OutlineInputBorder(
@@ -206,15 +223,16 @@ class _ApdFormRouteInnerState extends State<ApdFormRouteInner> {
                     "Submit",
                     style: TextStyle(color: Colors.white),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       var mapPost = new Map<String, dynamic>();
                       mapPost['jenis'] = jenis;
                       mapPost['url'] = url;
                       mapPost['harga'] = harga;
                       mapPost['gambar'] = gambar;
+                      String statusCode = await kirimApd(mapPost);
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(mapPost.toString()))
+                        SnackBar(content: Text('Status Code: ${statusCode.toString()}, silahkan pencet refresh Apd'))
                       );
                       Navigator.pop(context);
                     }

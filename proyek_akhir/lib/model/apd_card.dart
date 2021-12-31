@@ -17,7 +17,7 @@ class ApdCard {
 
   factory ApdCard.fromJson(Map<String, dynamic> json) {
     return ApdCard(
-      id: json['id'],
+      id: json['pk'],
       jenis: json['fields']['jenis'],
       url: json['fields']['lokasi'],
       harga: json['fields']['harga'],
