@@ -25,7 +25,7 @@ class RumahSakit {
 }
 
 Future<void> deleteRS(BuildContext context, int id) async {
-  String url = 'https://tk-pbp-d05.herokuapp.com/rumah-sakit/flutter-rs/?from=flutter&to=hapus&id=${id.toString()}';
+  String url = 'https://tk-pbp-d05.herokuapp.com/rumah-sakit/flutter-rs?from=flutter&to=delete&id=${id.toString()}';
   try {
     final response = await http.get(Uri.parse(url));
     Map<String, dynamic> data = jsonDecode(response.body);
@@ -43,6 +43,8 @@ Future<void> deleteRS(BuildContext context, int id) async {
 Widget rumahSakitCard(BuildContext context ,RumahSakit? rsData) {
   if (rsData == null) return Container();
   return Card(
+    margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical:10.0),
+    color: Colors.blue[200],
     child: Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -51,28 +53,43 @@ Widget rumahSakitCard(BuildContext context ,RumahSakit? rsData) {
             rsData.nama,
             style: TextStyle(
               fontSize: 20,
-              fontWeight: FontWeight.w700,
+              letterSpacing: 1,
             ),
           ),
-          Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.all(5.0),
-                child: Text('Alamat: ' + rsData.alamat),
-              ),
-              Padding(
-                padding: EdgeInsets.all(5.0),
-                child: Text('Url Gmaps: ' + rsData.urlGmaps),
-              ),
-              Padding(
-                padding: EdgeInsets.all(5.0),
-                child: Text('No. Telp: ' + rsData.noTelp),
-              ),
-              Padding(
-                padding: EdgeInsets.all(5.0),
-                child: Text('Tersedia: ' + rsData.tersedia),
-              ),
-            ],
+          const SizedBox(
+            height: 6,
+          ),
+          Text(
+            'Alamat: ${rsData.alamat}',
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.blue[800],
+              letterSpacing: 0.7,
+            ),
+          ),
+          Text(
+            'Url Gmaps: ${rsData.urlGmaps}',
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.blue[800],
+              letterSpacing: 0.7,
+            ),
+          ),
+          Text(
+            'No. Telp: ${rsData.noTelp}',
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.blue[800],
+              letterSpacing: 0.7,
+            ),
+          ),
+          Text(
+            'Tersedia: ${rsData.tersedia}',
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.blue[800],
+              letterSpacing: 0.7,
+            ),
           ),
           Container(
             color: Colors.red,

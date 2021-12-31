@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:proyek_akhir/page/rs_page.dart';
 
 import '../model/rumah_sakit.dart';
 
@@ -20,28 +21,19 @@ class _FormRSState extends State<FormRS> {
   String noTelp = '';
   String tersedia = 'IK';
 
-  Future<void> berhasilAddRS() async {
-    const url = 'https://tk-pbp-d05.herokuapp.com/rumah-sakit/add';
+  Future<void> berhasilAddRS(Map<String, dynamic> mapPost) async {
+    const url = 'https://tk-pbp-d05.herokuapp.com/rumah-sakit/flutter_add/';
     try {
-      final response = await http.post(Uri.parse(url),
+      Map<String, String> headers = new Map<String, String>();
+      headers['Accept'] = 'application/json';
+      headers['Content-type'] = 'application/json';
 
-        body: jsonEncode({
-          'nama': nama,
-          'lokasi': lokasi,
-          'alamat': alamat,
-          'url_gmaps': urlGmaps,
-          'no_telp': noTelp,
-          'tersedia': tersedia,
-        })
+      http.Response response = await http.post(
+        Uri.parse(url),
+        headers: headers,
+        body: jsonEncode(mapPost),
       );
-      Map<String, dynamic> extractedData = jsonDecode(response.body);
-      extractedData.forEach((key, value) {print(value);});
-      ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-          content: Text(extractedData['nama'] +
-            ' berhasil ditambah.')),
-      );
-    print('berhasil ditambah');
+      print('berhasil ditambah');
     } catch (e) {
       print(e);
     }
@@ -53,6 +45,7 @@ class _FormRSState extends State<FormRS> {
       appBar: AppBar(
         title: Text("Tambah Rumah Sakit"),
       ),
+      drawer: makeNavbar(context),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
@@ -195,12 +188,21 @@ class _FormRSState extends State<FormRS> {
                     "Submit",
                     style: TextStyle(color: Colors.white),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
+                      var mapPost = new Map<String, dynamic>();
+                      mapPost['nama'] = nama;
+                      mapPost['lokasi'] = lokasi;
+                      mapPost['alamat'] = alamat;
+                      mapPost['url_gmaps'] = urlGmaps;
+                      mapPost['no_telp'] = noTelp;
+                      mapPost['tersedia'] = tersedia;
+                      
+                      await berhasilAddRS(mapPost);
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Menambahkan Data')),
+                        SnackBar(content: Text('Berhasil menambah $nama'))
                       );
-                      berhasilAddRS();
+                      Navigator.pop(context);
                     }
                   },
                 ),
@@ -225,7 +227,7 @@ class FormRSEdit extends StatefulWidget {
 class _FormRSEditState extends State<FormRSEdit> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  int id = -1;
+  // int id = -1;
   String nama = '';
   String lokasi = 'JA';
   String alamat = '';
@@ -233,48 +235,46 @@ class _FormRSEditState extends State<FormRSEdit> {
   String noTelp = '';
   String tersedia = 'IK';
 
-  Future<void> fetchEditData() async {
+  // Future<void> fetchEditData() async {
+  //   int id = widget.id;
+  //   String url =
+  //     'https://tk-pbp-d05.herokuapp.com/rumah-sakit/flutter-rs?from=flutter&to=edit&id=${id.toString()}';
+  //   try {
+  //     final response = await http.get(Uri.parse(url));
+  //     Map<String, dynamic> data = jsonDecode(response.body);
+
+  //     setState(() {
+  //       id = id;
+  //       nama = data['nama'];
+  //       lokasi = data['lokasi'];
+  //       alamat = data['alamat'];
+  //       urlGmaps = data['url_gmaps'];
+  //       noTelp = data['no_telp'];
+  //       tersedia = data['tersedia'];
+  //     });
+  //     print('Berhasil fetch data untuk diedit');
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
+
+  Future<void> berhasilEditRS(Map<String, dynamic> mapPost) async {
     int id = widget.id;
-    String url =
-      'https://tk-pbp-d05.herokuapp.com/rumah-sakit/flutter-rs/?from=flutter&to=edit&id=${id.toString()}';
+    String url = 'https://tk-pbp-d05.herokuapp.com/rumah-sakit/flutter-edit/?id=$id';
     try {
-      final response = await http.get(Uri.parse(url));
-      Map<String, dynamic> data = jsonDecode(response.body);
+      Map<String, String> headers = new Map<String, String>();
+      headers['Accept'] = 'application/json';
+      headers['Content-type'] = 'application/json';
 
-      setState(() {
-        id = id;
-        nama = data['nama'];
-        lokasi = data['lokasi'];
-        alamat = data['alamat'];
-        urlGmaps = data['url_gmaps'];
-        noTelp = data['no_telp'];
-        tersedia = data['tersedia'];
-      });
-      print('Berhasil fetch data untuk diedit');
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  Future<void> berhasilEditRS() async {
-    String url = 'https://tk-pbp-d05.herokuapp.com/rumah-sakit/${id.toString()}/edit';
-    try {
-      final response = await http.post(Uri.parse(url),
-
-        body: jsonEncode({
-          'nama': nama,
-          'lokasi': lokasi,
-          'alamat': alamat,
-          'url_gmaps': urlGmaps,
-          'no_telp': noTelp,
-          'tersedia': tersedia,
-        })
+      http.Response response = await http.post(
+        Uri.parse(url),
+        headers: headers,
+        body: jsonEncode(mapPost),
       );
-      Map<String, dynamic> extractedData = jsonDecode(response.body);
-      extractedData.forEach((key, value) {print(value);});
+
       ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(extractedData['nama'] +
+        content: Text(mapPost['nama'] +
           ' berhasil diedit.')),
       );
       print('berhasil edit');
@@ -287,15 +287,16 @@ class _FormRSEditState extends State<FormRSEdit> {
   void initState() {
     super.initState();
     // fetch data
-    fetchEditData();
+    // fetchEditData();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Tambah Rumah Sakit"),
+        title: Text("Edit Rumah Sakit"),
       ),
+      drawer: makeNavbar(context),
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
@@ -438,12 +439,21 @@ class _FormRSEditState extends State<FormRSEdit> {
                     "Submit",
                     style: TextStyle(color: Colors.white),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
+                      var mapPost = new Map<String, dynamic>();
+                      mapPost['nama'] = nama;
+                      mapPost['lokasi'] = lokasi;
+                      mapPost['alamat'] = alamat;
+                      mapPost['url_gmaps'] = urlGmaps;
+                      mapPost['no_telp'] = noTelp;
+                      mapPost['tersedia'] = tersedia;
+                      
+                      await berhasilEditRS(mapPost);
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Menambahkan Data')),
+                        SnackBar(content: Text('Berhasil mengubah $nama'))
                       );
-                      berhasilEditRS();
+                      Navigator.pop(context);
                     }
                   },
                 ),
