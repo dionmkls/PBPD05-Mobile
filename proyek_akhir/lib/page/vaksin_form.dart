@@ -229,7 +229,7 @@ class _LokasiFormState extends State<LokasiForm> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => FormRS()),
+                  MaterialPageRoute(builder: (context) => MyApp()),
                 );
               },
             ),

@@ -13,6 +13,7 @@ import 'vaksin_index.dart';
 import 'rs_form.dart';
 import 'rs_page.dart';
 import 'faq.dart';
+import 'forum.dart';
 
 Future<String> kirimApd(Map<String, dynamic> mapPost) async {
   String url = 'https://tk-pbp-d05.herokuapp.com/apd/add-apd-flutter/';
@@ -174,7 +175,10 @@ class ApdFormRoute extends StatelessWidget {
               leading: Icon(Icons.forum),
               title: Text('Forum'),
               onTap: () {
-                // TODO
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Forum()),
+                );
               },
             ),
             ListTile(
