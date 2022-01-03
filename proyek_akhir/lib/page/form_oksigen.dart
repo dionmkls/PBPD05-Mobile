@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'form_oksigen.dart';
 import 'apd_form.dart';
 import 'apd_page.dart';
 import 'package:proyek_akhir/page/home_page.dart';
-import '../model/oksigen_tojson.dart';
 import 'vaksin_form.dart';
 import 'vaksin_index.dart';
 import 'oksigen.dart';
@@ -41,6 +41,29 @@ double screenHeightExcludingToolbar(BuildContext context,
   return screenHeight(context, dividedBy: dividedBy, reducedBy: kToolbarHeight);
 }
 
+Future<Album> createAlbum(String url, String address, String phone) async {
+  final response = await http.post(
+    Uri.parse('https://jsonplaceholder.typicode.com/albums'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'url': url,
+      'address': address,
+      'phone': phone,
+    }),
+  );
+
+  if (response.statusCode == 201) {
+    // If the server did return a 201 CREATED response,
+    // then parse the JSON.
+    return Album.fromJson(jsonDecode(response.body));
+  } else {
+    // If the server did not return a 201 CREATED response,
+    // then throw an exception.
+    throw Exception('Failed to create album.');
+  }
+}
 
 void main() {
     runApp(FormOksigen());
@@ -67,37 +90,10 @@ class MyState extends State<MyStatefulWidget>{
     Brightness _brightness = Brightness.light;
     static const warnagradien = LinearGradient(colors: <Color>[Color(0xff71b7e6), Color(0xff9b59b6)]);
     final TextEditingController urlcontroller = TextEditingController();
-    final TextEditingController alamatcontroller = TextEditingController();
-    final TextEditingController teleponcontroller = TextEditingController();
+    final TextEditingController addresscontroller = TextEditingController();
+    final TextEditingController phonecontroller = TextEditingController();
     final TextEditingController domisilicontroller = TextEditingController();
-    Future<JSON>? _futureJSON;
-
-
-    Future<JSON> createJSON(String url, String alamat, String telepon, String domisili) async {
-        final response = await http.post(
-            Uri.parse('https://tk-pbp-d05.herokuapp.com/tempat-oksigen/json'),
-            body: jsonEncode(<String, String>{
-                'url': url,
-                'alamat': alamat,
-                'telepon': telepon,
-                'domisili': domisili,
-            }),
-        );
-
-        print(response.body);
-
-        if (response.statusCode == 201) {
-            // If the server did return a 201 CREATED response,
-            // then parse the JSON.
-            return JSON.fromJson(jsonDecode(response.body));
-        }
-        else {
-            // If the server did not return a 201 CREATED response,
-            // then throw an exception.
-            throw Exception('Failed to create JSON.');
-        }
-    }
-
+    Future<Album>? _futureAlbum;
 
     void _onItemTapped() {
         setState(() {
@@ -158,157 +154,95 @@ class MyState extends State<MyStatefulWidget>{
                         padding: EdgeInsets.zero,
                         children: <Widget>[
                             DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text(
-                'Navigation Menu',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
+                                decoration: BoxDecoration(
+                                    color: Colors.blue,
+                                ),
+                                child: Text(
+                                    'Navigation Menu',
+                                    style: TextStyle(
+                                    color: Colors.white,
+                                        fontSize: 24,
+                                    ),
+                                ),
+                            ),
+                            ListTile(
+                                leading: Icon(Icons.home),
+                                title: Text('Beranda'),
+                                onTap: () {
+                                // TODO
+                                },
+                            ),
+                            ListTile(
+                                leading: FaIcon(FontAwesomeIcons.syringe),
+                                title: Text('Vaksin'),
+                                onTap: () {
+                                // TODO
+                                },
+                            ),
+                            ExpansionTile(
+                                title: Text("Oksigen"),
+                                leading: FaIcon(FontAwesomeIcons.medkit),
+                                children: <Widget>[
+                                    ListTile(
+                                        leading: FaIcon(FontAwesomeIcons.medkit),
+                                        title: Text('Lokasi'),
+                                        onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(builder: (context) => Oksigen()),
+                                            );
+                                        },
+                                    ),
+                                    ListTile(
+                                        leading: FaIcon(FontAwesomeIcons.medkit),
+                                        title: Text('Form'),
+                                        onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(builder: (context) => FormOksigen()),
+                                            );
+                                        },
+                                    ),
+                                ],
+                            ),
+                            ListTile(
+                                leading: FaIcon(FontAwesomeIcons.tshirt),
+                                title: Text('APD'),
+                                onTap: () {
+                                // TODO
+                                },
+                            ),
+                            ListTile(
+                                leading: FaIcon(FontAwesomeIcons.hospital),
+                                title: Text('Rumah Sakit'),
+                                onTap: () {
+                                // TODO
+                                },
+                            ),
+                            ListTile(
+                                leading: Icon(Icons.forum),
+                                title: Text('Forum'),
+                                onTap: () {
+                                // TODO
+                                },
+                            ),
+                            ListTile(
+                                leading: FaIcon(FontAwesomeIcons.questionCircle),
+                                title: Text('FAQ'),
+                                onTap: () {
+                                // TODO
+                                },
+                            ),
+                        ],
+                    ),
                 ),
-              ),
-            ),
-            ListTile(
-              leading: Icon(Icons.home),
-              title: Text('Beranda'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Beranda()),
-                );
-              },
-            ),
-            ExpansionTile(
-              title: Text("Vaksin"),
-              leading: FaIcon(FontAwesomeIcons.syringe),
-              children: <Widget>[
-                ListTile(
-                  leading: FaIcon(FontAwesomeIcons.syringe),
-                  title: Text('Lokasi'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Vaksin()),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: FaIcon(FontAwesomeIcons.syringe),
-                  title: Text('Form'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => LokasiForm()),
-                    );
-                  },
-                ),
-              ],
-            ),
-            ExpansionTile(
-              title: Text("Oksigen"),
-              leading: FaIcon(FontAwesomeIcons.medkit),
-              children: <Widget>[
-                ListTile(
-                  leading: FaIcon(FontAwesomeIcons.medkit),
-                  title: Text('Lokasi'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Oksigen()),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: FaIcon(FontAwesomeIcons.medkit),
-                  title: Text('Form'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => FormOksigen()),
-                    );
-                  },
-                ),
-              ],
-            ),
-            ExpansionTile(
-              title: Text("APD"),
-              leading: FaIcon(FontAwesomeIcons.tshirt),
-              children: <Widget>[
-                ListTile(
-                  leading: FaIcon(FontAwesomeIcons.tshirt),
-                  title: Text('Lokasi'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => MyApdPageWidget()),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: FaIcon(FontAwesomeIcons.tshirt),
-                  title: Text('Form'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ApdFormRoute()),
-                    );
-                  },
-                ),
-              ],
-            ),
-            ExpansionTile(
-              title: Text("Rumah Sakit"),
-              leading: FaIcon(FontAwesomeIcons.hospital),
-              children: <Widget>[
-                ListTile(
-                  leading: FaIcon(FontAwesomeIcons.hospital),
-                  title: Text('Lokasi'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => DaftarRS()),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: FaIcon(FontAwesomeIcons.hospital),
-                  title: Text('Form'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => FormRS()),
-                    );
-                  },
-                ),
-              ],
-            ),
-            ListTile(
-              leading: Icon(Icons.forum),
-              title: Text('Forum'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Forum()),
-                );
-              },
-            ),
-            ListTile(
-              leading: FaIcon(FontAwesomeIcons.questionCircle),
-              title: Text('FAQ'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => MyApp()),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-        body: SingleChildScrollView(
-                child: Center(
+        body: Column(
+            children: <Widget>[
+              new Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SingleChildScrollView(
+                      child: Center(
                     child: Form(
                       key: _formKey,
                       child: Builder(
@@ -316,7 +250,6 @@ class MyState extends State<MyStatefulWidget>{
                           children: <Widget>[
                             // ISI DENGAN CONTENT
                             TextFormField(
-                                controller: urlcontroller,
                               decoration: const InputDecoration(
                                 hintText: 'Enter an url',
                                 labelText: 'url',
@@ -329,7 +262,6 @@ class MyState extends State<MyStatefulWidget>{
                               },
                             ),
                             TextFormField(
-                                controller: alamatcontroller,
                               decoration: const InputDecoration(
                                 hintText: 'Enter an address',
                                 labelText: 'address',
@@ -342,7 +274,6 @@ class MyState extends State<MyStatefulWidget>{
                               },
                             ),
                             TextFormField(
-                                controller: teleponcontroller,
                               decoration: const InputDecoration(
                                 hintText: 'Enter a phone number',
                                 labelText: 'phone',
@@ -354,31 +285,9 @@ class MyState extends State<MyStatefulWidget>{
                                 return null;
                               },
                             ),
-                            TextFormField(
-                                controller: domisilicontroller,
-                              decoration: const InputDecoration(
-                                hintText: 'Enter domisili (Jakarta/Bogor/Depok/Tangerang/Bekasi)',
-                                labelText: 'domisili',
-                              ),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'cannot enter empty data';
-                                }
-                                return null;
-                              },
-                            ),
                             ElevatedButton(
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
-                                    setState(() {
-                                        createJSON(
-                                            urlcontroller.text,
-                                            alamatcontroller.text,
-                                            teleponcontroller.text,
-                                            domisilicontroller.text
-                                        );
-                                    });
-
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(content: Text('Processing Data')),
                                   );
@@ -396,7 +305,10 @@ class MyState extends State<MyStatefulWidget>{
                       ),
                     ),
                   )),
-        floatingActionButton: FloatingActionButton(
+                ],
+              ),
+            ],),
+        floatingActionButton: new FloatingActionButton(
             elevation: 10.0,
             child: new Icon(Icons.chat),
             backgroundColor: Color(0xFF162A49),

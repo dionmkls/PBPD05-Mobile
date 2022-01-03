@@ -8,9 +8,9 @@ import 'form_oksigen.dart';
 import 'apd_form.dart';
 import 'apd_page.dart';
 import 'package:proyek_akhir/page/home_page.dart';
-import 'package:proyek_akhir/api/album_api.dart';
 import 'vaksin_form.dart';
 import 'vaksin_index.dart';
+import 'oksigen.dart';
 import 'rs_form.dart';
 import 'rs_page.dart';
 import 'faq.dart';
@@ -38,6 +38,21 @@ double screenHeightExcludingToolbar(BuildContext context,
   return screenHeight(context, dividedBy: dividedBy, reducedBy: kToolbarHeight);
 }
 
+Future<Album> fetchAlbum() async {
+  final response = await http
+      .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/1'));
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response,
+    // then parse the JSON.
+    return Album.fromJson(jsonDecode(response.body));
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load album');
+  }
+}
+
 void main() {
   runApp(Oksigen());
 }
@@ -59,28 +74,17 @@ class MyStatefulWidget extends StatefulWidget {
 class MyState extends State<MyStatefulWidget> {
   int light = 1;
   late Future<Album> futureAlbum;
-  //Album album = Album(url: "Kosong", address: "Kosong", phone: "Kosong", domisili: "Kosong");
+  Album album = new Album(url: "", address: "", phone: "", domisili: "");
   Brightness _brightness = Brightness.light;
   static const warnagradien = LinearGradient(colors: <Color>[Color(0xff71b7e6), Color(0xff9b59b6)]);
-  //final myController = TextEditingController();
-  List<Album> albumList = [];
-  final children = <Widget>[];
-
-  void getAlbumfromApi() async {
-    AlbumApi.getAlbum().then((response) {
-      setState(() {
-        Iterable list = json.decode(response.body);
-        albumList = list.map((model) => Album.fromJson(model)).toList();
-      });
-    });
-  }
+  final myController = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-    getAlbumfromApi();
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    myController.dispose();
+    super.dispose();
   }
-
 
   void _onItemTapped() {
     setState(() {
@@ -117,6 +121,11 @@ class MyState extends State<MyStatefulWidget> {
     );
   }
 
+  @override
+  void initState() {
+        super.initState();
+        futureAlbum = fetchAlbum();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -141,321 +150,327 @@ class MyState extends State<MyStatefulWidget> {
             padding: EdgeInsets.zero,
             children: <Widget>[
               DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text(
-                'Navigation Menu',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                ),
+                child: Text(
+                  'Navigation Menu',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                  ),
                 ),
               ),
-            ),
-            ListTile(
-              leading: Icon(Icons.home),
-              title: Text('Beranda'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Beranda()),
-                );
-              },
-            ),
-            ExpansionTile(
-              title: Text("Vaksin"),
-              leading: FaIcon(FontAwesomeIcons.syringe),
-              children: <Widget>[
-                ListTile(
-                  leading: FaIcon(FontAwesomeIcons.syringe),
-                  title: Text('Lokasi'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Vaksin()),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: FaIcon(FontAwesomeIcons.syringe),
-                  title: Text('Form'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => LokasiForm()),
-                    );
-                  },
-                ),
-              ],
-            ),
-            ExpansionTile(
-              title: Text("Oksigen"),
-              leading: FaIcon(FontAwesomeIcons.medkit),
-              children: <Widget>[
-                ListTile(
-                  leading: FaIcon(FontAwesomeIcons.medkit),
-                  title: Text('Lokasi'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Oksigen()),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: FaIcon(FontAwesomeIcons.medkit),
-                  title: Text('Form'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => FormOksigen()),
-                    );
-                  },
-                ),
-              ],
-            ),
-            ExpansionTile(
-              title: Text("APD"),
-              leading: FaIcon(FontAwesomeIcons.tshirt),
-              children: <Widget>[
-                ListTile(
-                  leading: FaIcon(FontAwesomeIcons.tshirt),
-                  title: Text('Lokasi'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => MyApdPageWidget()),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: FaIcon(FontAwesomeIcons.tshirt),
-                  title: Text('Form'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ApdFormRoute()),
-                    );
-                  },
-                ),
-              ],
-            ),
-            ExpansionTile(
-              title: Text("Rumah Sakit"),
-              leading: FaIcon(FontAwesomeIcons.hospital),
-              children: <Widget>[
-                ListTile(
-                  leading: FaIcon(FontAwesomeIcons.hospital),
-                  title: Text('Lokasi'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => DaftarRS()),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: FaIcon(FontAwesomeIcons.hospital),
-                  title: Text('Form'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => FormRS()),
-                    );
-                  },
-                ),
-              ],
-            ),
-            ListTile(
-              leading: Icon(Icons.forum),
-              title: Text('Forum'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Forum()),
-                );
-              },
-            ),
-            ListTile(
-              leading: FaIcon(FontAwesomeIcons.questionCircle),
-              title: Text('FAQ'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => MyApp()),
-                );
-              },
-            ),
-          ],
+              ListTile(
+                leading: Icon(Icons.home),
+                title: Text('Beranda'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Beranda()),
+                  );
+                },
+              ),
+              ExpansionTile(
+                title: Text("Vaksin"),
+                leading: FaIcon(FontAwesomeIcons.syringe),
+                children: <Widget>[
+                  ListTile(
+                    leading: FaIcon(FontAwesomeIcons.syringe),
+                    title: Text('Lokasi'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Vaksin()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    leading: FaIcon(FontAwesomeIcons.syringe),
+                    title: Text('Form'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LokasiForm()),
+                      );
+                    },
+                  ),
+                ],
+              ),
+              ExpansionTile(
+                title: Text("Oksigen"),
+                leading: FaIcon(FontAwesomeIcons.medkit),
+                children: <Widget>[
+                  ListTile(
+                    leading: FaIcon(FontAwesomeIcons.medkit),
+                    title: Text('Lokasi'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Oksigen()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    leading: FaIcon(FontAwesomeIcons.medkit),
+                    title: Text('Form'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => FormOksigen()),
+                      );
+                    },
+                  ),
+                ],
+              ),
+              ExpansionTile(
+                title: Text("APD"),
+                leading: FaIcon(FontAwesomeIcons.tshirt),
+                children: <Widget>[
+                  ListTile(
+                    leading: FaIcon(FontAwesomeIcons.tshirt),
+                    title: Text('Lokasi'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MyApdPageWidget()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    leading: FaIcon(FontAwesomeIcons.tshirt),
+                    title: Text('Form'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ApdFormRoute()),
+                      );
+                    },
+                  ),
+                ],
+              ),
+              ExpansionTile(
+                title: Text("Rumah Sakit"),
+                leading: FaIcon(FontAwesomeIcons.hospital),
+                children: <Widget>[
+                  ListTile(
+                    leading: FaIcon(FontAwesomeIcons.hospital),
+                    title: Text('Lokasi'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => DaftarRS()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    leading: FaIcon(FontAwesomeIcons.hospital),
+                    title: Text('Form'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => FormRS()),
+                      );
+                    },
+                  ),
+                ],
+              ),
+              ListTile(
+                leading: Icon(Icons.forum),
+                title: Text('Forum'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Forum()),
+                  );
+                },
+              ),
+              ListTile(
+                leading: FaIcon(FontAwesomeIcons.questionCircle),
+                title: Text('FAQ'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MyApp()),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
-      ),
-        body: SingleChildScrollView(
-                    child: Center(
-                        child: Column(
-                            children: <Widget>[
-                                Container(
-                                    child: Text(
-                                        "Jakarta",
-                                        style: GoogleFonts.balooBhaina(
-                                            fontSize: 25,
-                                        )
-                                    ),
-                                ),
-                                for (var item in albumList)
-                                    if (item.domisili == "Jakarta")
-                                        Card(
-                                            clipBehavior: Clip.antiAlias,
-                                            child: Column(
-                                                children: [
-                                                    Image.asset('assets/posisi.png'),
-                                                    ListTile(
-                                                        leading: FaIcon(FontAwesomeIcons.globe),
-                                                        title: Text(item.url),
-                                                    ),    
-                                                    ListTile(
-                                                        leading: Icon(Icons.home),
-                                                        title: Text(item.alamat),
-                                                    ),  
-                                                    ListTile(
-                                                        leading: Icon(Icons.phone),
-                                                        title: Text(item.telepon),
-                                                    ),                                                      
-                                                ],
-                                            ),
-                                        ),
-                            
+        body: Column(
+            children: <Widget>[
+              new Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SingleChildScrollView(
+                    child: Column(
+                      children: <Widget>[
+                        FutureBuilder<Album>(
+                            future: futureAlbum,
+                            builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                    album = snapshot.data!;
+                                }
+                                else if (snapshot.hasError) {
+                                    return Text('${snapshot.error}');
+                                }
 
-                                Container(
-                                    child: Text(
-                                        "Bogor",
-                                        style: GoogleFonts.balooBhaina(
-                                            fontSize: 25,
-                                        )
-                                    ),
-                                ),
-                                for (var item in albumList)
-                                    if (item.domisili == "Bogor")
-                                        Card(
-                                            clipBehavior: Clip.antiAlias,
-                                            child: Column(
-                                                children: [
-                                                    Image.asset('assets/posisi.png'),
-                                                    ListTile(
-                                                        leading: FaIcon(FontAwesomeIcons.globe),
-                                                        title: Text(item.url),
-                                                    ),    
-                                                    ListTile(
-                                                        leading: Icon(Icons.home),
-                                                        title: Text(item.alamat),
-                                                    ),  
-                                                    ListTile(
-                                                        leading: Icon(Icons.phone),
-                                                        title: Text(item.telepon),
-                                                    ),                                                      
-                                                ],
-                                            ),
-                                        ),
-
-                                
-                                Container(
-                                    child: Text(
-                                        "Depok",
-                                        style: GoogleFonts.balooBhaina(
-                                            fontSize: 25,
-                                        )
-                                    ),
-                                ),
-                                for (var item in albumList)
-                                    if (item.domisili == "Depok")
-                                        Card(
-                                            clipBehavior: Clip.antiAlias,
-                                            child: Column(
-                                                children: [
-                                                    Image.asset('assets/posisi.png'),
-                                                    ListTile(
-                                                        leading: FaIcon(FontAwesomeIcons.globe),
-                                                        title: Text(item.url),
-                                                    ),    
-                                                    ListTile(
-                                                        leading: Icon(Icons.home),
-                                                        title: Text(item.alamat),
-                                                    ),  
-                                                    ListTile(
-                                                        leading: Icon(Icons.phone),
-                                                        title: Text(item.telepon),
-                                                    ),                                                      
-                                                ],
-                                            ),
-                                        ),
-
-                                
-                                Container(
-                                    child: Text(
-                                        "Tangerang",
-                                        style: GoogleFonts.balooBhaina(
-                                            fontSize: 25,
-                                        )
-                                    ),
-                                ),
-                                for (var item in albumList)
-                                    if (item.domisili == "Tangerang")
-                                        Card(
-                                            clipBehavior: Clip.antiAlias,
-                                            child: Column(
-                                                children: [
-                                                    Image.asset('assets/posisi.png'),
-                                                    ListTile(
-                                                        leading: FaIcon(FontAwesomeIcons.globe),
-                                                        title: Text(item.url),
-                                                    ),    
-                                                    ListTile(
-                                                        leading: Icon(Icons.home),
-                                                        title: Text(item.alamat),
-                                                    ),  
-                                                    ListTile(
-                                                        leading: Icon(Icons.phone),
-                                                        title: Text(item.telepon),
-                                                    ),                                                      
-                                                ],
-                                            ),
-                                        ),
-
-
-                                Container(
-                                    child: Text(
-                                        "Bekasi",
-                                        style: GoogleFonts.balooBhaina(
-                                            fontSize: 25,
-                                        )
-                                    ),
-                                ),
-                                for (var item in albumList)
-                                    if (item.domisili == "Bekasi")
-                                        Card(
-                                            clipBehavior: Clip.antiAlias,
-                                            child: Column(
-                                                children: [
-                                                    Image.asset('assets/posisi.png'),
-                                                    ListTile(
-                                                        leading: FaIcon(FontAwesomeIcons.globe),
-                                                        title: Text(item.url),
-                                                    ),    
-                                                    ListTile(
-                                                        leading: Icon(Icons.home),
-                                                        title: Text(item.alamat),
-                                                    ),  
-                                                    ListTile(
-                                                        leading: Icon(Icons.phone),
-                                                        title: Text(item.telepon),
-                                                    ),                                                      
-                                                ],
-                                            ),
-                                        ),
-                            ],
+                                // By default, show a loading spinner.
+                                return Container();
+                            },
                         ),
+                        Container(
+                            child: Text(
+                                "Jakarta",
+                                style: GoogleFonts.balooBhaina(
+                                    fontSize: 25,
+                                )
+                            ),
+                        ),
+                        Card(
+                            clipBehavior: Clip.antiAlias,
+                            child: Column(
+                                children: [
+                                    Image.asset('assets/posisi.png'),
+                                    ListTile(
+                                        leading: FaIcon(FontAwesomeIcons.globe),
+                                        title: Text("${album.url}"),
+                                    ),    
+                                    ListTile(
+                                        leading: Icon(Icons.home),
+                                        title: Text("${album.address}"),
+                                    ),  
+                                    ListTile(
+                                        leading: Icon(Icons.phone),
+                                        title: Text("${album.phone}"),
+                                    ),                                                      
+                                ],
+                            ),
+                        ),
+
+                        Container(
+                            child: Text(
+                                "Bogor",
+                                style: GoogleFonts.balooBhaina(
+                                    fontSize: 25,
+                                )
+                            ),
+                        ),
+                        Card(
+                            clipBehavior: Clip.antiAlias,
+                            child: Column(
+                                children: [
+                                    Image.asset('assets/posisi.png'),
+                                    ListTile(
+                                        leading: FaIcon(FontAwesomeIcons.globe),
+                                        title: Text("${album.url}"),
+                                    ),    
+                                    ListTile(
+                                        leading: Icon(Icons.home),
+                                        title: Text("${album.address}"),
+                                    ),  
+                                    ListTile(
+                                        leading: Icon(Icons.phone),
+                                        title: Text("${album.phone}"),
+                                    ),                                                      
+                                ],
+                            ),
+                        ),
+
+                        Container(
+                            child: Text(
+                                "Depok",
+                                style: GoogleFonts.balooBhaina(
+                                    fontSize: 25,
+                                )
+                            ),
+                        ),
+                        Card(
+                            clipBehavior: Clip.antiAlias,
+                            child: Column(
+                                children: [
+                                    Image.asset('assets/posisi.png'),
+                                    ListTile(
+                                        leading: FaIcon(FontAwesomeIcons.globe),
+                                        title: Text("${album.url}"),
+                                    ),    
+                                    ListTile(
+                                        leading: Icon(Icons.home),
+                                        title: Text("${album.address}"),
+                                    ),  
+                                    ListTile(
+                                        leading: Icon(Icons.phone),
+                                        title: Text("${album.phone}"),
+                                    ),                                                      
+                                ],
+                            ),
+                        ),
+
+                        Container(
+                            child: Text(
+                                "Tangerang",
+                                style: GoogleFonts.balooBhaina(
+                                    fontSize: 25,
+                                )
+                            ),
+                        ),
+                        Card(
+                            clipBehavior: Clip.antiAlias,
+                            child: Column(
+                                children: [
+                                    Image.asset('assets/posisi.png'),
+                                    ListTile(
+                                        leading: FaIcon(FontAwesomeIcons.globe),
+                                        title: Text("${album.url}"),
+                                    ),    
+                                    ListTile(
+                                        leading: Icon(Icons.home),
+                                        title: Text("${album.address}"),
+                                    ),  
+                                    ListTile(
+                                        leading: Icon(Icons.phone),
+                                        title: Text("${album.phone}"),
+                                    ),                                                      
+                                ],
+                            ),
+                        ),
+
+                        Container(
+                            child: Text(
+                                "Bekasi",
+                                style: GoogleFonts.balooBhaina(
+                                    fontSize: 25,
+                                )
+                            ),
+                        ),
+                        Card(
+                            clipBehavior: Clip.antiAlias,
+                            child: Column(
+                                children: [
+                                    Image.asset('assets/posisi.png'),
+                                    ListTile(
+                                        leading: FaIcon(FontAwesomeIcons.globe),
+                                        title: Text("${album.url}"),
+                                    ),    
+                                    ListTile(
+                                        leading: Icon(Icons.home),
+                                        title: Text("${album.address}"),
+                                    ),  
+                                    ListTile(
+                                        leading: Icon(Icons.phone),
+                                        title: Text("${album.phone}"),
+                                    ),                                                      
+                                ],
+                            ),
+                        ),
+                      ],
                     ),
-        ),
+                  ),
+                ],
+              ),
+            ],),
         floatingActionButton: new FloatingActionButton(
             elevation: 10.0,
             child: new Icon(Icons.chat),

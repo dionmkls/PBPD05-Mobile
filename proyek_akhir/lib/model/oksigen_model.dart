@@ -1,24 +1,33 @@
+import '../page/form_oksigen.dart';
+import'package:flutter/cupertino.dart';
+import'package:flutter/material.dart';
+import'package:google_fonts/google_fonts.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 
 class Album {
-    String url;
-    String alamat;
-    String telepon;
-    String domisili;
+  final String url;
+  final String address;
+  final String phone;
+  final String domisili;
 
 
-    Album.fromJson(Map json) :
-        url = json['fields']['url'],
-        alamat = json['fields']['alamat'],
-        telepon = json['fields']['telepon'],
-        domisili = json['fields']['domisili'];
-    
-    Map toJson(){
-        return {
-            'url': url,
-            'alamat': alamat,
-            'telepon': telepon,
-            'domisili': domisili
-        };
-    }
+  Album({
+    required this.url,
+    required this.address,
+    required this.phone,
+    required this.domisili,
+  });
+
+  factory Album.fromJson(Map<String, dynamic> json) {
+    return Album(
+      url: json['url'],
+      address: json['address'],
+      phone: json['phone'],
+      domisili: json['domisili'],
+    );
+  }
 }
